@@ -4,6 +4,7 @@ interface ApiMain {
     fun onInit()
     fun recordRenderCall(renderCall: (ApiMain) -> Unit)
     fun stop()
+    fun isOnRenderThread(): Boolean
 
     class NoopApiMain : ApiMain {
         override fun onInit() {
@@ -16,6 +17,10 @@ interface ApiMain {
 
         override fun stop() {
             throw IllegalStateException("ApiMain#stop called before initialization")
+        }
+
+        override fun isOnRenderThread(): Boolean {
+            throw IllegalStateException("ApiMain#isOnRenderThread called before initialization")
         }
     }
 }

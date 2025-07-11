@@ -1,14 +1,31 @@
 package xyz.qweru.multirender.impl.lwjgl.render
 
-import org.lwjgl.opengl.GL15
+import org.lwjgl.opengl.GL15.*
+import org.lwjgl.opengl.GL30
 
 object BufferUtils {
-    fun createVbo(vertices: FloatArray): Int {
+    fun createBuffer(): Int {
         val buffers = IntArray(1);
-        GL15.glGenBuffers(buffers);
-        val vbo = buffers[0];
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
-        GL15.glBufferData(vbo, vertices, GL15.GL_STATIC_DRAW)
-        return vbo;
+        glGenBuffers(buffers);
+        val buf = buffers[0]
+        return buf;
+    }
+
+    fun bindVbo(vbo: Int, vertices: FloatArray) {
+        glBindBuffer(GL_ARRAY_BUFFER, vbo)
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW)
+    }
+
+    fun bindEbo(ebo: Int, indices: IntArray) {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
+    }
+
+    fun createVao(): Int {
+        return GL30.glGenVertexArrays()
+    }
+
+    fun bindVao(vao: Int) {
+        GL30.glBindVertexArray(vao)
     }
 }
