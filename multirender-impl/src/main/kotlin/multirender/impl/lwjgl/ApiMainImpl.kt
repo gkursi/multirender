@@ -7,7 +7,6 @@ import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL20.*
-import org.lwjgl.opengl.GL30
 import org.lwjgl.opengl.GL30.glBindVertexArray
 import org.lwjgl.system.MemoryStack.stackPush
 import org.lwjgl.system.MemoryUtil.NULL
@@ -17,14 +16,17 @@ import xyz.qweru.multirender.api.config.MRConfig
 import xyz.qweru.multirender.api.render.shader.ShaderProgram
 import xyz.qweru.multirender.api.render.shader.ShaderProvider
 import xyz.qweru.multirender.api.render.shader.ShaderType
+import xyz.qweru.multirender.api.render.texture.Texture
+import xyz.qweru.multirender.api.render.texture.TextureProvider
 import xyz.qweru.multirender.api.util.Profiler
 import xyz.qweru.multirender.impl.lwjgl.input.KeyboardImpl
 import xyz.qweru.multirender.impl.lwjgl.render.BufferUtils
 import xyz.qweru.multirender.impl.lwjgl.render.StateManager
+import xyz.qweru.multirender.impl.lwjgl.render.dim2.Context2dImpl
 import xyz.qweru.multirender.impl.lwjgl.render.shader.ShaderProgramImpl
 import xyz.qweru.multirender.impl.lwjgl.render.shader.ShaderProviderImpl
+import xyz.qweru.multirender.impl.lwjgl.render.texture.TextureProviderImpl
 import xyz.qweru.multirender.impl.lwjgl.util.Locks
-import java.nio.file.Path
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedDeque
 
@@ -36,11 +38,15 @@ class ApiMainImpl : ApiMain {
     private val renderCalls: Deque<(ApiMain) -> Unit> = ConcurrentLinkedDeque()
 
     private val shaderProvider: ShaderProvider = ShaderProviderImpl()
+    private val textureProvider: TextureProvider = TextureProviderImpl()
+
     private lateinit var shaderProgram: ShaderProgram
     private lateinit var pinkShaderProgram: ShaderProgram
     private var vbo: IntArray = intArrayOf(0, 0)
     private var vao: IntArray = intArrayOf(0, 0)
     private var ebo: IntArray = intArrayOf(0, 0)
+    private lateinit var texture: Texture
+    private lateinit var texture1: Texture
 
     private var window: Long = NULL
     private var width = 0
@@ -48,7 +54,6 @@ class ApiMainImpl : ApiMain {
     private var focused = false
 
     private lateinit var renderThread: Thread
-    private val DIR: Path = Path.of("")
 
     override fun onInit() {
         synchronized(Locks.START_STOP) {
@@ -160,6 +165,8 @@ class ApiMainImpl : ApiMain {
         StateManager.applyState()
         // apply smoothing for lines and polygons
         StateManager.applyState(StateManager.State.MSAA, StateManager.State.BLEND, StateManager.State.LINE_SMOOTH, StateManager.State.POLYGON_SMOOTH)
+
+        Provider.context2d = Context2dImpl(window)
     }
 
     // temporary until i create a proper dynamic renderer
@@ -167,10 +174,10 @@ class ApiMainImpl : ApiMain {
         // ... vertices ...
         // triangle vertices with color
         val vertices = floatArrayOf(
-            // positions         // colors
-             0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-             0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top
+            // positions         // colors          // texture
+             0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, // bottom left
+             0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5f, 1.0f, // top
         )
         // square vertices (no color)
         val vertices2 = floatArrayOf(
@@ -213,10 +220,12 @@ class ApiMainImpl : ApiMain {
         BufferUtils.bindEbo(ebo[0], triangleIndices)
 
         // set vertex attribute pointer (stride - space between vertices on the vbo)
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * Float.SIZE_BYTES, 0L)
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.SIZE_BYTES, 3L * Float.SIZE_BYTES)
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * Float.SIZE_BYTES, 0L)
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * Float.SIZE_BYTES, 3L * Float.SIZE_BYTES)
+        glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * Float.SIZE_BYTES, 6L * Float.SIZE_BYTES)
         glEnableVertexAttribArray(0)
         glEnableVertexAttribArray(1)
+        glEnableVertexAttribArray(2)
 
         println("Created triangle vbo with id ${vbo[0]}")
         println("Created vao with id ${vao[0]}")
@@ -244,6 +253,9 @@ class ApiMainImpl : ApiMain {
 //        glBindVertexArray(0)
 //        glBindBuffer(GL_ARRAY_BUFFER, 0)
 //        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
+
+        texture = textureProvider.findOrCreateTexture("/images/wall.jpg")
+        texture1 = textureProvider.findOrCreateTexture("/images/awesomeface.png")
     }
 
     private fun initShaders() {
@@ -251,9 +263,12 @@ class ApiMainImpl : ApiMain {
         val fragmentShader = shaderProvider.compileShaderPath("core/first-orange.fsh", ShaderType.Fragment)
 
         shaderProgram = ShaderProgramImpl(vertexShader, fragmentShader)
+        shaderProgram.use()
+        shaderProgram.setUniform1i("texture1", 0)
+        shaderProgram.setUniform1i("texture2", 1)
 
-        GL30.glDeleteShader(vertexShader)
-        GL30.glDeleteShader(fragmentShader)
+        glDeleteShader(vertexShader)
+        glDeleteShader(fragmentShader)
     }
 
     private fun destroyGlfw() {
@@ -270,12 +285,13 @@ class ApiMainImpl : ApiMain {
 
             // get green value based on time
             val timeValue = glfwGetTime().toFloat()
-            val greenValue: Float = (sin(timeValue) / 2.0f) + 0.5f
+            val value: Float = (sin(timeValue) / 2.0f) + 0.5f
 
             shaderProgram.use(); // bind program
-//            shaderProgram.setUniform4f("ourColor", 0.0f, greenValue, 0.0f, 1f)
-            shaderProgram.setUniform1f("offset", 0f)
+            shaderProgram.setUniform1f("offset", value)
 
+            texture.bind(0)
+            texture1.bind(1)
             BufferUtils.bindVao(vao[0]);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
 
