@@ -2,7 +2,7 @@ package xyz.qweru.multirender.impl.lwjgl.render.shader
 
 import org.lwjgl.opengl.GL20.*
 import xyz.qweru.multirender.api.render.shader.ShaderProgram
-import xyz.qweru.multirender.impl.lwjgl.util.Util
+import xyz.qweru.multirender.impl.lwjgl.util.misc.Util
 
 class ShaderProgramImpl(vertShader: Int, fragShader: Int) : ShaderProgram(vertShader, fragShader) {
 

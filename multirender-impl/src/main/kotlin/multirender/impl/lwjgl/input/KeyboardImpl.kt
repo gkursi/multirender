@@ -1,7 +1,7 @@
 package xyz.qweru.multirender.impl.lwjgl.input
 
 import xyz.qweru.multirender.api.input.Keyboard
-import xyz.qweru.multirender.impl.lwjgl.util.Locks
+import xyz.qweru.multirender.impl.lwjgl.util.misc.Locks
 
 class KeyboardImpl : Keyboard {
     val callbacks: ArrayList<(Long, Int, Int, Int) -> Unit> = ArrayList();

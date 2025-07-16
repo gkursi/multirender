@@ -1,4 +1,4 @@
-package xyz.qweru.multirender.impl.lwjgl.util
+package xyz.qweru.multirender.impl.lwjgl.util.misc
 
 object Locks {
     // main api

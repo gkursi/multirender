@@ -1,7 +1,11 @@
 package xyz.qweru.multirender.impl.lwjgl
 
 import org.joml.Math.sin
+import org.joml.Matrix4f
+import org.joml.Vector3d
+import org.joml.Vector4f
 import org.lwjgl.Version
+import org.lwjgl.assimp.AIVector3D
 import org.lwjgl.glfw.Callbacks.glfwFreeCallbacks
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
@@ -10,6 +14,7 @@ import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL30.glBindVertexArray
 import org.lwjgl.system.MemoryStack.stackPush
 import org.lwjgl.system.MemoryUtil.NULL
+import org.lwjgl.system.Platform
 import xyz.qweru.multirender.api.ApiMain
 import xyz.qweru.multirender.api.Provider
 import xyz.qweru.multirender.api.config.MRConfig
@@ -26,7 +31,7 @@ import xyz.qweru.multirender.impl.lwjgl.render.dim2.Context2dImpl
 import xyz.qweru.multirender.impl.lwjgl.render.shader.ShaderProgramImpl
 import xyz.qweru.multirender.impl.lwjgl.render.shader.ShaderProviderImpl
 import xyz.qweru.multirender.impl.lwjgl.render.texture.TextureProviderImpl
-import xyz.qweru.multirender.impl.lwjgl.util.Locks
+import xyz.qweru.multirender.impl.lwjgl.util.misc.Locks
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedDeque
 
@@ -41,7 +46,6 @@ class ApiMainImpl : ApiMain {
     private val textureProvider: TextureProvider = TextureProviderImpl()
 
     private lateinit var shaderProgram: ShaderProgram
-    private lateinit var pinkShaderProgram: ShaderProgram
     private var vbo: IntArray = intArrayOf(0, 0)
     private var vao: IntArray = intArrayOf(0, 0)
     private var ebo: IntArray = intArrayOf(0, 0)
@@ -56,24 +60,32 @@ class ApiMainImpl : ApiMain {
     private lateinit var renderThread: Thread
 
     override fun onInit() {
-        synchronized(Locks.START_STOP) {
-            println("Hello LWJGL " + Version.getVersion() + "!")
-            renderThread = Thread {
-                initGlfw()
-                createWindow()
-                initShaders()
-                initBuffers()
-                println("Initialized Multirender")
-                while (!glfwWindowShouldClose(window)) {
-                    val frameStart = System.nanoTime()
-                    render()
-                    Profiler.lastFrame = System.nanoTime() - frameStart
-                }
-                println("Shutting down")
-                destroyGlfw()
-            }
-            renderThread.name = "Render Thread"
+        if (Constants.IS_MAC) {
+            println("Detected MacOS, using main thread")
+            renderThread = Thread.currentThread();
+            onInit0()
+        } else {
+            renderThread = Thread(this::onInit0)
             renderThread.start()
+        }
+    }
+
+    private fun onInit0() {
+        synchronized(Locks.START_STOP) {
+            renderThread.name = "MR Render Thread"
+            println("Hello LWJGL " + Version.getVersion() + "!")
+            initGlfw()
+            createWindow()
+            initShaders()
+            initBuffers()
+            println("Initialized Multirender")
+            while (!glfwWindowShouldClose(window)) {
+                val frameStart = System.nanoTime()
+                render()
+                Profiler.lastFrame = System.nanoTime() - frameStart
+            }
+            println("Shutting down")
+            destroyGlfw()
         }
     }
 
@@ -263,12 +275,23 @@ class ApiMainImpl : ApiMain {
         val fragmentShader = shaderProvider.compileShaderPath("core/first-orange.fsh", ShaderType.Fragment)
 
         shaderProgram = ShaderProgramImpl(vertexShader, fragmentShader)
+        // set texture sampler order
         shaderProgram.use()
         shaderProgram.setUniform1i("texture1", 0)
         shaderProgram.setUniform1i("texture2", 1)
 
         glDeleteShader(vertexShader)
         glDeleteShader(fragmentShader)
+
+        var trans: Matrix4f = Matrix4f(
+            1f, 0f, 0f, 0f,
+            0f, 1f, 0f, 0f,
+            0f, 0f, 1f, 0f,
+            0f, 0f, 0f, 1f)
+        var vec: Vector4f = Vector4f(1f, 0f, 0f, 1f);
+        trans = trans.translate(1f, 1f, 0f)
+        vec = vec.mul(trans);
+        println(vec.toString())
     }
 
     private fun destroyGlfw() {

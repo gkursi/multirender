@@ -1,4 +1,4 @@
-package xyz.qweru.multirender.impl.lwjgl.util
+package xyz.qweru.multirender.impl.lwjgl.util.misc
 
 import org.lwjgl.opengl.GL20
 
