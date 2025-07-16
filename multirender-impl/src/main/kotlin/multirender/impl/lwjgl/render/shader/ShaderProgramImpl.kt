@@ -86,6 +86,11 @@ class ShaderProgramImpl(vertShader: Int, fragShader: Int) : ShaderProgram(vertSh
         glUniform4i(uniform, if (value) 1 else 0, if (value) 1 else 0, if (value) 1 else 0, if (value) 1 else 0)
     }
 
+    override fun setUniformMatrix4fv(name: String, value: FloatArray) {
+        val uniform = findUniformOrThrow(name)
+        glUniformMatrix4fv(uniform, false, value)
+    }
+
     private fun findUniformOrThrow(name: String): Int {
         val vertexColorLocation: Int = glGetUniformLocation(shaderProgram, name) // find uniform location
         if (vertexColorLocation != -1) return vertexColorLocation;

@@ -2,6 +2,7 @@ package xyz.qweru.multirender.impl.lwjgl
 
 import org.joml.Math.sin
 import org.joml.Matrix4f
+import org.joml.Quaternionf
 import org.joml.Vector3d
 import org.joml.Vector4f
 import org.lwjgl.Version
@@ -279,6 +280,7 @@ class ApiMainImpl : ApiMain {
         shaderProgram.use()
         shaderProgram.setUniform1i("texture1", 0)
         shaderProgram.setUniform1i("texture2", 1)
+        shaderProgram
 
         glDeleteShader(vertexShader)
         glDeleteShader(fragmentShader)
@@ -288,10 +290,9 @@ class ApiMainImpl : ApiMain {
             0f, 1f, 0f, 0f,
             0f, 0f, 1f, 0f,
             0f, 0f, 0f, 1f)
-        var vec: Vector4f = Vector4f(1f, 0f, 0f, 1f);
-        trans = trans.translate(1f, 1f, 0f)
-        vec = vec.mul(trans);
-        println(vec.toString())
+        trans = trans.translate(0.5f, -0.5f, 0.0f)
+        trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat()).rotationY(glfwGetTime().toFloat()))
+        shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
     }
 
     private fun destroyGlfw() {
@@ -311,11 +312,56 @@ class ApiMainImpl : ApiMain {
             val value: Float = (sin(timeValue) / 2.0f) + 0.5f
 
             shaderProgram.use(); // bind program
-            shaderProgram.setUniform1f("offset", value)
-
             texture.bind(0)
             texture1.bind(1)
             BufferUtils.bindVao(vao[0]);
+
+            var trans = Matrix4f(
+                1f, 0f, 0f, 0f,
+                0f, 1f, 0f, 0f,
+                0f, 0f, 1f, 0f,
+                0f, 0f, 0f, 1f)
+            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat() / 2f))
+            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat() / 2f))
+//            trans = trans.translate(-0.5f, 0.5f, 0.0f)
+            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
+
+            trans = Matrix4f(
+                1f, 0f, 0f, 0f,
+                0f, 1f, 0f, 0f,
+                0f, 0f, 1f, 0f,
+                0f, 0f, 0f, 1f)
+            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat()))
+            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat()))
+//            trans = trans.translate(0.5f, -0.5f, 0.0f)
+            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
+
+            trans = Matrix4f(
+                1f, 0f, 0f, 0f,
+                0f, 1f, 0f, 0f,
+                0f, 0f, 1f, 0f,
+                0f, 0f, 0f, 1f)
+            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat() * 2f))
+            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat() * 2f))
+//            trans = trans.translate(-0.5f, 0.5f, 0.0f)
+            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
+
+            trans = Matrix4f(
+                1f, 0f, 0f, 0f,
+                0f, 1f, 0f, 0f,
+                0f, 0f, 1f, 0f,
+                0f, 0f, 0f, 1f)
+            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat() * 4f))
+            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat() * 4f))
+//            trans = trans.translate(-0.5f, 0.5f, 0.0f)
+            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
 
 //            BufferUtils.bindVao(vao[1]);

@@ -21,4 +21,7 @@ abstract class ShaderProgram(val vertShader: Int, val fragShader: Int) {
     abstract fun setUniform2b(name: String, value: Boolean, value2: Boolean)
     abstract fun setUniform3b(name: String, value: Boolean, value2: Boolean, value3: Boolean)
     abstract fun setUniform4b(name: String, value: Boolean, value2: Boolean, value3: Boolean, value4: Boolean)
+
+    // matrix
+    abstract fun setUniformMatrix4fv(name: String, value: FloatArray)
 }
