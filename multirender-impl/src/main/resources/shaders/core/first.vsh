@@ -5,6 +5,8 @@ layout (location = 1) in vec2 aTexCoord;
 out vec2 TexCoord;
 
 uniform mat4 transform;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
 
 void main()
 {

@@ -312,8 +312,10 @@ class ApiMainImpl : ApiMain {
             val value: Float = (sin(timeValue) / 2.0f) + 0.5f
 
             shaderProgram.use(); // bind program
-            texture.bind(0)
-            texture1.bind(1)
+            textureProvider.findOrCreateTexture("/images/wall.jpg").bind(0)
+            textureProvider.findOrCreateTexture("/images/awesomeface.png").bind(1)
+//            texture.bind(0)
+//            texture1.bind(1)
             BufferUtils.bindVao(vao[0]);
 
             var trans = Matrix4f(

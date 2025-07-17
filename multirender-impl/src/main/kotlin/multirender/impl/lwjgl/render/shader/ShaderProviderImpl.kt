@@ -3,6 +3,7 @@ package xyz.qweru.multirender.impl.lwjgl.render.shader
 import org.lwjgl.opengl.GL20
 import xyz.qweru.multirender.api.render.shader.ShaderProvider
 import xyz.qweru.multirender.api.render.shader.ShaderType
+import xyz.qweru.multirender.impl.lwjgl.util.misc.Util
 import java.io.FileNotFoundException
 
 class ShaderProviderImpl : ShaderProvider {
@@ -11,15 +12,8 @@ class ShaderProviderImpl : ShaderProvider {
         GL20.glShaderSource(shader, shaderSource)
         GL20.glCompileShader(shader);
 
-        // check for errors
-        val buf = IntArray(1);
-        GL20.glGetShaderiv(shader, GL20.GL_COMPILE_STATUS, buf);
-        if (buf[0] != 1) {
-            println("Warning: ${shaderType.name} shader compilation failed ")
-            System.out.flush()
-            println(GL20.glGetShaderInfoLog(shader))
-        } else {
-            println("Compiled ${shaderType.name} shader to id $shader")
+        Util.logShaderErrorIfPresent(shader, GL20.GL_COMPILE_STATUS) {
+            println((if (it) "Compiled" else "Failed to compile") + " shader with id $shader")
         }
 
         return shader;

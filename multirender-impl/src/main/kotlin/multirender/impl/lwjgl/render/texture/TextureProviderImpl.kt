@@ -1,5 +1,6 @@
 package xyz.qweru.multirender.impl.lwjgl.render.texture
 
+import org.jetbrains.annotations.NotNull
 import org.lwjgl.BufferUtils
 import org.lwjgl.stb.STBImage
 import org.lwjgl.system.MemoryStack
@@ -8,7 +9,15 @@ import xyz.qweru.multirender.api.render.texture.TextureProvider
 import java.nio.ByteBuffer
 
 class TextureProviderImpl : TextureProvider {
-    override fun findOrCreateTexture(path: String): Texture {
+
+    val cache: HashMap<String, Texture> = HashMap()
+
+    override fun findOrCreateTexture(path: String, forceReload: Boolean): Texture {
+        return cache.takeIf { !forceReload } ?.computeIfAbsent(path, this::createTexture0)
+                                             ?: createTexture0(path).also { cache[path] = it }
+    }
+
+    private fun createTexture0(path: String): Texture {
         val content: ByteBuffer?
         val width: Int
         val height: Int
