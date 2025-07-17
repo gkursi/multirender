@@ -1,5 +1,7 @@
 package xyz.qweru.multirender.impl.lwjgl
 
+import glm_.glm
+import glm_.mat4x4.Mat4
 import org.joml.Math.sin
 import org.joml.Matrix4f
 import org.joml.Quaternionf
@@ -322,51 +324,27 @@ class ApiMainImpl : ApiMain {
 //            texture1.bind(1)
             BufferUtils.bindVao(vao[0]);
 
-            var trans = Matrix4f(
-                1f, 0f, 0f, 0f,
-                0f, 1f, 0f, 0f,
-                0f, 0f, 1f, 0f,
-                0f, 0f, 0f, 1f)
-            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat() / 2f))
-            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat() / 2f))
-//            trans = trans.translate(-0.5f, 0.5f, 0.0f)
-            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+            var transGLM = Mat4.identity.rotateX(glfwGetTime().toFloat() / 2f)
+            transGLM = transGLM.rotateY(glfwGetTime().toFloat() / 2f)
+            shaderProgram.setUniformMatrix4fv("transform", transGLM.toFloatArray())
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
 
-            trans = Matrix4f(
-                1f, 0f, 0f, 0f,
-                0f, 1f, 0f, 0f,
-                0f, 0f, 1f, 0f,
-                0f, 0f, 0f, 1f)
-            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat()))
-            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat()))
-//            trans = trans.translate(0.5f, -0.5f, 0.0f)
-            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+            transGLM = Mat4.identity.rotateX(glfwGetTime().toFloat())
+            transGLM = transGLM.rotateY(glfwGetTime().toFloat())
+            shaderProgram.setUniformMatrix4fv("transform", transGLM.toFloatArray())
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
 
-            trans = Matrix4f(
-                1f, 0f, 0f, 0f,
-                0f, 1f, 0f, 0f,
-                0f, 0f, 1f, 0f,
-                0f, 0f, 0f, 1f)
-            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat() * 2f))
-            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat() * 2f))
-//            trans = trans.translate(-0.5f, 0.5f, 0.0f)
-            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+            transGLM = Mat4.identity.rotateX(glfwGetTime().toFloat() * 2f)
+            transGLM = transGLM.rotateY(glfwGetTime().toFloat() * 2f)
+            shaderProgram.setUniformMatrix4fv("transform", transGLM.toFloatArray())
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
 
-            trans = Matrix4f(
-                1f, 0f, 0f, 0f,
-                0f, 1f, 0f, 0f,
-                0f, 0f, 1f, 0f,
-                0f, 0f, 0f, 1f)
-            trans = trans.rotate(Quaternionf().rotationX(glfwGetTime().toFloat() * 4f))
-            trans = trans.rotate(Quaternionf().rotationY(glfwGetTime().toFloat() * 4f))
-//            trans = trans.translate(-0.5f, 0.5f, 0.0f)
-            shaderProgram.setUniformMatrix4fv("transform", trans.get(floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)))
+            transGLM = Mat4.identity.rotateX(glfwGetTime().toFloat() * 4f)
+            transGLM = transGLM.rotateY(glfwGetTime().toFloat() * 4f)
+            shaderProgram.setUniformMatrix4fv("transform", transGLM.toFloatArray())
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
 
