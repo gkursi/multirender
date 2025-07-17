@@ -22,11 +22,12 @@ class TextureProviderImpl : TextureProvider {
         val width: Int
         val height: Int
         val size: Int
+        val channels: Int
 
         MemoryStack.stackPush().use {
             val w = it.mallocInt(1)
             val h = it.mallocInt(1)
-            val channels = it.mallocInt(1)
+            val ch = it.mallocInt(1)
 
             val contentStream = javaClass.getResourceAsStream(path);
             if (contentStream == null) throw IllegalArgumentException("Could not find image $path")
@@ -35,14 +36,15 @@ class TextureProviderImpl : TextureProvider {
             byteBuffer.put(bytes)
             byteBuffer.flip()
 
-            content = STBImage.stbi_load_from_memory(byteBuffer, w, h, channels, 0)
+            content = STBImage.stbi_load_from_memory(byteBuffer, w, h, ch, 0)
             if (content == null) throw RuntimeException("Could not load image $path")
             width = w.get()
             height = h.get()
             size = bytes.size;
+            channels = ch.get()
         }
 
         println("Loaded $path with size $size")
-        return TextureImpl(width, height, content!!)
+        return TextureImpl(width, height, content!!, channels)
     }
 }
