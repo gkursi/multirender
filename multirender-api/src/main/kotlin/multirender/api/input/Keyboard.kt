@@ -9,13 +9,6 @@ interface Keyboard : CallbackHandler<(Long, Int, Int, Int) -> Unit> {
      */
     override fun registerCallback(callback: (Long, Int, Int, Int) -> Unit): Int
 
-    class NoopKeyboard : Keyboard {
-        override fun registerCallback(callback: (Long, Int, Int, Int) -> Unit): Int {
-            throw IllegalStateException("Called Keyboard#registerCallback before initialization")
-        }
-
-        override fun removeCallback(id: Int): Boolean {
-            throw IllegalStateException("Called Keyboard#removeCallback before initialization")
-        }
-    }
+    fun press(key: Int)
+    fun release(key: Int)
 }

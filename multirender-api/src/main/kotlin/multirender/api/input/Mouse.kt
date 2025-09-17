@@ -9,13 +9,6 @@ interface Mouse : CallbackHandler<(Long, Double, Double) -> Unit> {
      */
     override fun registerCallback(callback: (Long, Double, Double) -> Unit): Int
 
-    class NoopMouse : Mouse {
-        override fun registerCallback(callback: (Long, Double, Double) -> Unit): Int {
-            throw IllegalStateException("Called Mouse#registerCallback before initialization")
-        }
-
-        override fun removeCallback(id: Int): Boolean {
-            throw IllegalStateException("Called Mouse#removeCallback before initialization")
-        }
-    }
+    fun press(button: Int)
+    fun release(button: Int)
 }
