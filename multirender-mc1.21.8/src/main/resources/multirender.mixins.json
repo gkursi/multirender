@@ -6,10 +6,17 @@
   "mixins": [
   ],
   "client": [
+    "DrawContextMixin",
+    "GameRendererMixin",
+    "InGameHUDMixin",
     "KeyboardMixin",
     "MouseMixin",
     "WindowMixin",
+    "mixininterface.DrawContextAccessor",
     "mixininterface.MouseInvoker",
+    "mixininterface.RenderLayer$MultiPhaseParameters$BuilderMixin",
+    "mixininterface.RenderLayerInvoker",
+    "mixininterface.RenderPipelinesAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

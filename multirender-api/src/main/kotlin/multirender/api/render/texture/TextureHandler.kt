@@ -9,5 +9,5 @@ interface TextureHandler {
     /**
      * If not previously cached, create a texture from the given data
      */
-    fun findOrCreateTexture(label: String, forceReload: Boolean, content: ByteArray): Texture
+    fun findOrCreateTexture(label: String, forceReload: Boolean = false, content: ByteArray): Texture
 }

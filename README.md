@@ -1,27 +1,26 @@
 # MultiRender
-OpenGL renderer written in kotlin
+OpenGL renderer written in kotlin,
+compatible with Minecraft.
 
-### What is this for
-This is a way for me to learn kotlin syntax, I might
-turn it in to something more, but not any time soon. 
-Since I'm still quite new to Kotlin, the code will
-probably be bad for a while. 
-
-This is also a way to hopefully avoid having to
-rewrite almost all render code in my mods every time Mojang
-changes their rendering system.
-### Structure
+## Structure
 This project is currently split up in to 2 parts:
 - **Multirender-API** - the api
-- **Multirender-impl** - an implementation of the api using LWJGL/GLFW/OpenGL
+- **Multirender-impl** - an (incomplete) implementation of the api using just LWJGL/GLFW/OpenGL
+- **Multirender-mc<version>** - an implementation of the api for minecraft
 
-Eventually I'll add a second and third implementation, 
-which will be tweaked versions of the first
-implementation made specifically for Minecraft 
-1.20.4 (?) - 1.21.1 and 1.21.3 - 1.21.7 (or 
-whichever is the latest, unless mojang decides 
-to rewrite their renderer again)
+## Usage
+- Include both `multirender-api` and the implementation you want to use in your project 
+- Use the `API` object to access the api
+   - `API.base` - base class for the api
+   - `Api.mousehandler` / `API.keyboardHandler` - receive/spoof user input
+   - `API.textureHandler` - create and manage textures (currently broken)
+   - `API.context2d` - 2d rendering context
+- Refrain from using your own implementation of the api together with the provided implementations
 
-### Credit
-I'm writing this as I'm following the awesome tutorial at https://learnopengl.com/ 
-(really, it's very good, even with it being at least 11 years old)
+## Roadmap
+- Add basic elements to 2d context (quads, rounded quads, circles, lines, ...)
+- Fix textures
+- Add 3d context
+
+## Credit
+Base implementation made with https://learnopengl.com/

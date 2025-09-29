@@ -2,7 +2,7 @@ package xyz.qweru
 
 import org.lwjgl.glfw.GLFW
 import xyz.qweru.multirender.api.API
-import xyz.qweru.multirender.api.util.Profiler
+import xyz.qweru.multirender.impl.util.misc.Profiler
 import xyz.qweru.multirender.impl.ApiBaseImpl
 import java.util.*
 

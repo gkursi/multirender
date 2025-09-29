@@ -9,7 +9,6 @@
   "contact": {},
 
   "license": "All-Rights-Reserved",
-  "icon": "assets/multirender/icon.png",
 
   "environment": "client",
   "entrypoints": {
@@ -21,7 +20,7 @@
   "mixins": [
     "multirender.mixins.json"
   ],
-
+  "accessWidener": "multirender.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-language-kotlin": ">=${kotlin_loader_version}",

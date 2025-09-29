@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm") version "2.2.20"
     id("fabric-loom") version "1.11-SNAPSHOT"
     id("maven-publish")
 }
@@ -23,6 +23,9 @@ java {
     withSourcesJar()
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/multirender.accesswidener")
+}
 
 fabricApi {
     configureDataGeneration {
@@ -78,6 +81,7 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_${project.base.archivesName}" }
     }
+    outputs.upToDateWhen { false }
 }
 
 // configure the maven publication

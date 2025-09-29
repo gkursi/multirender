@@ -22,11 +22,10 @@ import xyz.qweru.multirender.api.render.shader.ShaderProgram
 import xyz.qweru.multirender.api.render.shader.ShaderProvider
 import xyz.qweru.multirender.api.render.shader.ShaderType
 import xyz.qweru.multirender.api.render.texture.Texture
-import xyz.qweru.multirender.api.util.Profiler
+import xyz.qweru.multirender.impl.util.misc.Profiler
 import xyz.qweru.multirender.impl.input.KeyboardImpl
 import xyz.qweru.multirender.impl.render.BufferUtils
 import xyz.qweru.multirender.impl.render.StateManager
-import xyz.qweru.multirender.impl.render.dim2.Context2dImpl
 import xyz.qweru.multirender.impl.render.shader.ShaderProgramImpl
 import xyz.qweru.multirender.impl.render.shader.ShaderProviderImpl
 import xyz.qweru.multirender.impl.render.texture.TextureHandlerImpl
@@ -195,8 +194,6 @@ class ApiBaseImpl : ApiBase {
             StateManager.State.LINE_SMOOTH,
             StateManager.State.POLYGON_SMOOTH
         )
-
-        API.context2d = Context2dImpl()
     }
 
     private fun initCoordinates() {
