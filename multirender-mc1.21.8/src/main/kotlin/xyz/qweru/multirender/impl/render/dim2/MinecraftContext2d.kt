@@ -1,5 +1,6 @@
 package xyz.qweru.multirender.impl.render.dim2
 
+import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.ScreenRect
 import net.minecraft.client.gui.render.state.GuiRenderState
 import net.minecraft.client.texture.TextureSetup
@@ -40,6 +41,7 @@ class MinecraftContext2d : Context2d() {
     }
 
     override fun end() {
+        renderState.createNewRootLayer()
         check("end")
         building = false
     }
@@ -63,9 +65,11 @@ class MinecraftContext2d : Context2d() {
 
     override fun line(x: Float, y: Float, x1: Float, y1: Float,
                       color1: Color, color2: Color) {
+        check("line")
         val tex = getTextureSetup()
         renderState.addSimpleElement(LineState(
-            if (tex == TextureSetup.empty()) LinePipeline.PLAIN else LinePipeline.WITH_TEXTURE,
+//            if (tex == TextureSetup.empty()) LinePipeline.PLAIN else LinePipeline.WITH_TEXTURE,
+            LinePipeline.LINES_NODEPTH_PIPELINE,
             tex, Matrix3x2f(matrices), x, y, x1, y1,
             color1 = color1.rgb, color2 = color2.rgb))
     }
@@ -88,6 +92,11 @@ class MinecraftContext2d : Context2d() {
     override fun clearTexture() {
         check("clearTexture")
         this.texture = null
+    }
+
+    override fun lineWidth(w: Float) {
+        check("lineWidth")
+        RenderSystem.lineWidth(w)
     }
 
     private fun quadInternal(x: Float, y: Float, w: Float, h: Float,

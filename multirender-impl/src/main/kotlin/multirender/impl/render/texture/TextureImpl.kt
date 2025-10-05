@@ -7,7 +7,7 @@ import org.lwjgl.stb.STBImage
 import xyz.qweru.multirender.api.render.texture.Texture
 import java.nio.ByteBuffer
 
-class TextureImpl(width: Int, height: Int, val content: ByteBuffer, val channels: Int) : Texture(width, height) {
+class TextureImpl(val width: Int, val height: Int, val content: ByteBuffer, val channels: Int) : Texture {
     private var textureId: Int = -1
     private var format: Int = GL_RGB
     private var unloaded = false

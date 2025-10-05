@@ -13,6 +13,11 @@ public interface RenderPipelinesAccessor {
         throw new AssertionError();
     }
 
+    @Accessor("RENDERTYPE_LINES_SNIPPET")
+    static RenderPipeline.Snippet mr_getLineSnippet() {
+        throw new AssertionError();
+    }
+
     @Accessor("POSITION_TEX_COLOR_SNIPPET")
     static RenderPipeline.Snippet mr_getPositionTexColorSnippet() {
         throw new AssertionError();

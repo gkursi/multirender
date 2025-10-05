@@ -27,6 +27,8 @@ abstract class Context2d {
     abstract fun setTexture(texture: Texture)
     abstract fun clearTexture()
 
+    abstract fun lineWidth(w: Float)
+
     /* For Java usage */
 
     fun quad(x: Float, y: Float, w: Float, h: Float, color: Color, rad: Int) {
