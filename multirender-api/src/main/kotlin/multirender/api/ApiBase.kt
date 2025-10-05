@@ -5,4 +5,5 @@ interface ApiBase {
     fun recordRenderCall(renderCall: (ApiBase) -> Unit)
     fun stop()
     fun isOnRenderThread(): Boolean
+    fun getDeltaTime(): Float
 }

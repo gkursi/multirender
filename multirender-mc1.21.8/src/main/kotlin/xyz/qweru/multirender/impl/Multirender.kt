@@ -13,6 +13,8 @@ import xyz.qweru.multirender.impl.util.Globals.client
 
 class Multirender : ModInitializer, ApiBase {
     private var init = false
+    var lf: Long = 0L
+    var dt: Float = 0.167f
 
     override fun onInitialize() {
         client = MinecraftClient.getInstance()
@@ -32,8 +34,7 @@ class Multirender : ModInitializer, ApiBase {
     }
 
     override fun recordRenderCall(renderCall: (ApiBase) -> Unit) = client.execute { renderCall.invoke(this) }
-
     override fun stop() = client.scheduleStop()
-
     override fun isOnRenderThread(): Boolean = RenderSystem.isOnRenderThread()
+    override fun getDeltaTime(): Float = dt
 }

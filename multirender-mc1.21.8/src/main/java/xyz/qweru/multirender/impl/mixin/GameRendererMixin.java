@@ -1,9 +1,5 @@
 package xyz.qweru.multirender.impl.mixin;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
-import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.render.state.GuiRenderState;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.RenderTickCounter;
@@ -14,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.qweru.multirender.api.API;
+import xyz.qweru.multirender.impl.Multirender;
 import xyz.qweru.multirender.impl.render.dim2.MinecraftContext2d;
 
 @Mixin(GameRenderer.class)
@@ -23,6 +20,12 @@ public class GameRendererMixin {
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/render/state/GuiRenderState;clear()V"))
     private void onRender2zd(RenderTickCounter tickCounter, boolean tick, CallbackInfo ci) {
+        // calculate deltatime
+        long frame = System.currentTimeMillis();
+        Multirender multirender = (Multirender) API.base;
+        multirender.setDt((frame - multirender.getLf()) / 1000f);
+        multirender.setLf(frame);
+        // set up 2d context
         MinecraftContext2d ctx = ((MinecraftContext2d) API.context2d);
         ctx.setTarget(guiState);
         ctx.begin();
