@@ -3,7 +3,6 @@ OpenGL renderer written in kotlin,
 compatible with Minecraft.
 
 ## Structure
-This project is currently split up in to 2 parts:
 - **Multirender-API** - the api
 - **Multirender-impl** - an (incomplete) implementation of the api using just LWJGL/GLFW/OpenGL
 - **Multirender-mc<version>** - an implementation of the api for minecraft
