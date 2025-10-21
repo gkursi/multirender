@@ -114,6 +114,8 @@ class ApiBaseImpl : ApiBase {
         return Thread.currentThread().equals(renderThread)
     }
 
+    override fun getDeltaTime(): Float = 1f // TODO
+
     private fun initGlfw() {
         // init glfw
         GLFWErrorCallback.createPrint(System.err).set()

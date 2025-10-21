@@ -47,7 +47,7 @@ dependencies {
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
-    implementation(project(":multirender-api"))
+    implementation(project(":multirender-api"))?.let { include(it) }
 }
 
 tasks.processResources {
