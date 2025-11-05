@@ -37,11 +37,11 @@ class MinecraftMouse : Mouse {
     }
 
     override fun press(button: Int) {
-        (client.mouse as MouseInvoker).invokeOnMouseButton(client.window.handle, button, GLFW.GLFW_PRESS, 0)
+        (client.mouseHandler as MouseInvoker).invokeOnMouseButton(client.window.window, button, GLFW.GLFW_PRESS, 0)
     }
 
     override fun release(button: Int) {
-        (client.mouse as MouseInvoker).invokeOnMouseButton(client.window.handle, button, GLFW.GLFW_RELEASE, 0)
+        (client.mouseHandler as MouseInvoker).invokeOnMouseButton(client.window.window, button, GLFW.GLFW_RELEASE, 0)
     }
 
     fun onMove(window: Long, x: Double, y: Double) {

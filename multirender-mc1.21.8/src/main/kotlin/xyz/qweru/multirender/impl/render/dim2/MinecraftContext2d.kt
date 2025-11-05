@@ -1,9 +1,9 @@
 package xyz.qweru.multirender.impl.render.dim2
 
 import com.mojang.blaze3d.systems.RenderSystem
-import net.minecraft.client.gui.ScreenRect
+import net.minecraft.client.gui.navigation.ScreenRectangle
+import net.minecraft.client.gui.render.TextureSetup
 import net.minecraft.client.gui.render.state.GuiRenderState
-import net.minecraft.client.texture.TextureSetup
 import org.joml.Matrix3x2f
 import org.joml.Matrix3x2fStack
 import xyz.qweru.multirender.api.API
@@ -23,7 +23,7 @@ class MinecraftContext2d : Context2d() {
     private lateinit var renderState: GuiRenderState
     private lateinit var matrices: Matrix3x2fStack
     private var texture: Texture? = null
-    private var scissor: ScreenRect? = null
+    private var scissor: ScreenRectangle? = null
 
     fun setTarget(state: GuiRenderState) {
         renderState = state
@@ -37,11 +37,12 @@ class MinecraftContext2d : Context2d() {
         if (!API.base.isOnRenderThread()) throw IllegalThreadStateException("Call to begin() off-thread")
         if (building) throw IllegalStateException("begin() called twice")
         building = true
-        renderState.createNewRootLayer()
+        renderState.blurBeforeThisStratum()
+        renderState.nextStratum()
     }
 
     override fun end() {
-        renderState.createNewRootLayer()
+        renderState.nextStratum()
         check("end")
         building = false
     }
@@ -67,7 +68,7 @@ class MinecraftContext2d : Context2d() {
                       color1: Color, color2: Color) {
         check("line")
         val tex = getTextureSetup()
-        renderState.addSimpleElement(LineState(
+        renderState.submitGuiElement(LineState(
 //            if (tex == TextureSetup.empty()) LinePipeline.PLAIN else LinePipeline.WITH_TEXTURE,
             LinePipeline.LINES_NODEPTH_PIPELINE,
             tex, Matrix3x2f(matrices), x, y, x1, y1,
@@ -102,8 +103,8 @@ class MinecraftContext2d : Context2d() {
     private fun quadInternal(x: Float, y: Float, w: Float, h: Float,
                              color1: Int, color2: Int, color3: Int, color4: Int) {
         val tex = getTextureSetup()
-        renderState.addSimpleElement(QuadState(
-            if (tex == TextureSetup.empty()) QuadPipeline.PLAIN else QuadPipeline.WITH_TEXTURE, tex,
+        renderState.submitGuiElement(QuadState(
+            if (tex == TextureSetup.noTexture()) QuadPipeline.PLAIN else QuadPipeline.WITH_TEXTURE, tex,
             Matrix3x2f(matrices), x, y, x + w, y + h, scissor = scissor,
             color1 = color1, color2 = color2, color3 = color3, color4 = color4
         ))
@@ -116,6 +117,6 @@ class MinecraftContext2d : Context2d() {
     }
 
     private fun getTextureSetup(): TextureSetup
-        = if (texture == null) TextureSetup.empty() else (texture as MinecraftTexture).getTextureSetup()
+        = if (texture == null) TextureSetup.noTexture() else (texture as MinecraftTexture).getTextureSetup()
 
 }

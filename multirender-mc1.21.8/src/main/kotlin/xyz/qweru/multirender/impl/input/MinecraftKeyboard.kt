@@ -1,9 +1,9 @@
 package xyz.qweru.multirender.impl.input
 
-import net.minecraft.client.MinecraftClient
 import org.lwjgl.glfw.GLFW
 import xyz.qweru.multirender.api.input.Keyboard
 import xyz.qweru.multirender.impl.util.Globals
+import xyz.qweru.multirender.impl.util.Globals.client
 import xyz.qweru.multirender.impl.util.Locks
 
 class MinecraftKeyboard : Keyboard {
@@ -24,11 +24,11 @@ class MinecraftKeyboard : Keyboard {
     }
 
     override fun press(key: Int) {
-        MinecraftClient.getInstance().keyboard.onKey(Globals.client.window.handle, key, key, GLFW.GLFW_PRESS, 0)
+        client.keyboardHandler.keyPress(client.window.window, key, key, GLFW.GLFW_PRESS, 0)
     }
 
     override fun release(key: Int) {
-        MinecraftClient.getInstance().keyboard.onKey(Globals.client.window.handle, key, key, GLFW.GLFW_RELEASE, 0)
+        client.keyboardHandler.keyPress(client.window.window, key, key, GLFW.GLFW_RELEASE, 0)
     }
 
     override fun removeCallback(id: Int): Boolean {

@@ -1,8 +1,7 @@
 package xyz.qweru.multirender.impl.util
 
-import net.minecraft.client.MinecraftClient
+import net.minecraft.client.Minecraft
 
 object Globals {
-    const val msaa2d = true
-    lateinit var client: MinecraftClient
+    lateinit var client: Minecraft
 }

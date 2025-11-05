@@ -2,7 +2,7 @@ package xyz.qweru.multirender.impl
 
 import com.mojang.blaze3d.systems.RenderSystem
 import net.fabricmc.api.ModInitializer
-import net.minecraft.client.MinecraftClient
+import net.minecraft.client.Minecraft
 import xyz.qweru.multirender.api.API
 import xyz.qweru.multirender.api.ApiBase
 import xyz.qweru.multirender.impl.input.MinecraftKeyboard
@@ -17,7 +17,7 @@ class Multirender : ModInitializer, ApiBase {
     var dt: Float = 0.167f
 
     override fun onInitialize() {
-        client = MinecraftClient.getInstance()
+        client = Minecraft.getInstance()
         API.base = this
         onInit()
     }
@@ -34,7 +34,7 @@ class Multirender : ModInitializer, ApiBase {
     }
 
     override fun recordRenderCall(renderCall: (ApiBase) -> Unit) = client.execute { renderCall.invoke(this) }
-    override fun stop() = client.scheduleStop()
+    override fun stop() = client.stop()
     override fun isOnRenderThread(): Boolean = RenderSystem.isOnRenderThread()
     override fun getDeltaTime(): Float = dt
 }

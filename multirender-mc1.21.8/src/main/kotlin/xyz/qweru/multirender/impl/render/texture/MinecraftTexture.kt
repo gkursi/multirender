@@ -2,7 +2,7 @@ package xyz.qweru.multirender.impl.render.texture
 
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.textures.GpuTextureView
-import net.minecraft.client.texture.TextureSetup
+import net.minecraft.client.gui.render.TextureSetup
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL13.GL_TEXTURE0
 import org.lwjgl.opengl.GL13.glActiveTexture
@@ -55,7 +55,7 @@ class MinecraftTexture(val width: Int, val height: Int, val content: ByteBuffer,
 
     fun getTextureSetup(): TextureSetup {
         createView(0)
-        return TextureSetup.withoutGlTexture(glTextureView)
+        return TextureSetup.singleTexture(glTextureView!!)
     }
 
     private fun generate(unit: Int) {
