@@ -8,10 +8,12 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io")
 }
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("com.github.gkursi:basalt:20dd54f16b")
 }
 
 tasks.test {

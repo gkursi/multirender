@@ -1,7 +1,6 @@
 package xyz.qweru.multirender.api.render.shader
 
-abstract class ShaderProgram(val vertShader: Int, val fragShader: Int) {
-    abstract fun getProgramId(): Int
+abstract class ShaderProgram {
     abstract fun use()
 
     // floats

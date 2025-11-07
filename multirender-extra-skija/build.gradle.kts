@@ -9,6 +9,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://packages.jetbrains.team/maven/p/skija/maven")
+    maven("https://jitpack.io")
 }
 
 dependencies {

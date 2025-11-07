@@ -17,6 +17,9 @@ import xyz.qweru.multirender.impl.render.texture.MinecraftTexture
 import xyz.qweru.multirender.impl.util.MathUtils
 import java.awt.Color
 
+/**
+ * Incomplete, currently only supports quads with radius 0
+ */
 class MinecraftContext2d : Context2d() {
 
     private var building = false
