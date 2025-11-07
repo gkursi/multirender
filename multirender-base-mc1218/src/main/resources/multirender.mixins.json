@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.qweru.multirender.impl.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "client": [
+    "DrawContextMixin",
+    "GameRendererMixin",
+    "GuiMixin",
+    "KeyboardMixin",
+    "MouseMixin",
+    "WindowMixin",
+    "mixininterface.DrawContextAccessor",
+    "mixininterface.MouseInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

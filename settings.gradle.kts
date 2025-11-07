@@ -12,5 +12,5 @@ plugins {
 
 rootProject.name = "multirender"
 include("multirender-api")
-include("multirender-impl")
-include("multirender-mc1.21.8")
+include("multirender-base-mc1218")
+include("multirender-extra-skija")
