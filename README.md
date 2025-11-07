@@ -3,14 +3,15 @@ OpenGL renderer written in kotlin,
 compatible with Minecraft.
 
 ## Structure
-- **Multirender-API** - the api
-- **Multirender-impl** - an (incomplete) implementation of the api using just LWJGL/GLFW/OpenGL
-- **Multirender-mc<version>** - an implementation of the api for minecraft
+- `multirender-api` - the api
+- `multirender-base-..` - full api implementation for the specified version
+- `multirender-extra-..` - optional extra dependencies for more features
 
 ## Usage
 - Include both `multirender-api` and the implementation you want to use in your project 
 - Use the `API` object to access the api
    - `API.base` - base class for the api
+   - `API.event` - event bus, for usage [see this](https://github.com/gkursi/basalt)
    - `Api.mousehandler` / `API.keyboardHandler` - receive/spoof user input
    - `API.textureHandler` - create and manage textures (currently broken)
    - `API.context2d` - 2d rendering context
