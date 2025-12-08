@@ -7,7 +7,6 @@ import xyz.qweru.multirender.api.input.Mouse
 import xyz.qweru.multirender.api.input.event.MouseMoveEvent
 import xyz.qweru.multirender.impl.mixin.mixininterface.MouseInvoker
 import xyz.qweru.multirender.impl.util.Globals.client
-import xyz.qweru.multirender.impl.util.Locks
 
 class MinecraftMouse : Mouse {
 
@@ -23,7 +22,7 @@ class MinecraftMouse : Mouse {
         if (window != client.window?.window) return
         MouseMoveEvent.x = x
         MouseMoveEvent.y = y
-        API.event.post(MouseMoveEvent)
+        API.events.post(MouseMoveEvent)
     }
 
     override fun input(key: Int, action: Input) {

@@ -2,13 +2,14 @@ package xyz.qweru.multirender.impl
 
 import com.mojang.blaze3d.systems.RenderSystem
 import net.fabricmc.api.ModInitializer
-import net.minecraft.client.Minecraft
 import xyz.qweru.multirender.api.API
 import xyz.qweru.multirender.api.ApiBase
+import xyz.qweru.multirender.api.render.window.Window
 import xyz.qweru.multirender.impl.input.MinecraftKeyboard
 import xyz.qweru.multirender.impl.input.MinecraftMouse
 import xyz.qweru.multirender.impl.render.dim2.MinecraftContext2d
 import xyz.qweru.multirender.impl.render.texture.MinecraftTextureHandler
+import xyz.qweru.multirender.impl.render.window.MinecraftWindow
 import xyz.qweru.multirender.impl.util.Globals.client
 
 class Multirender : ModInitializer, ApiBase {
@@ -17,7 +18,6 @@ class Multirender : ModInitializer, ApiBase {
     var dt: Float = 0.167f
 
     override fun onInitialize() {
-        client = Minecraft.getInstance()
         API.base = this
         onInit()
     }
@@ -33,8 +33,10 @@ class Multirender : ModInitializer, ApiBase {
         API.context2d = MinecraftContext2d()
     }
 
-    override fun recordRenderCall(renderCall: (ApiBase) -> Unit) = client.execute { renderCall.invoke(this) }
+    override fun recordRenderCall(renderCall: (ApiBase) -> Unit) =
+        client.execute { renderCall.invoke(this) }
     override fun stop() = client.stop()
     override fun isOnRenderThread(): Boolean = RenderSystem.isOnRenderThread()
     override fun getDeltaTime(): Float = dt
+    override fun getWindow(): Window = MinecraftWindow
 }

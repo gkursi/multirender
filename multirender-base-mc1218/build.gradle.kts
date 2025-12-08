@@ -50,7 +50,6 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
     implementation(project(":multirender-api"))?.let { include(it) }
-    implementation("com.github.gkursi:basalt:20dd54f16b")
 
     setOf(
         "fabric-transitive-access-wideners-v1"

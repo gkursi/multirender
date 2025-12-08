@@ -33,6 +33,6 @@ class MinecraftKeyboard : Keyboard {
         KeyPressEvent.key = key
         KeyPressEvent.mod = mod
         KeyPressEvent.scan = scan
-        API.event.post(KeyPressEvent)
+        API.events.post(KeyPressEvent)
     }
 }

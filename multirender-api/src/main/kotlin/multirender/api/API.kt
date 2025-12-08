@@ -7,7 +7,7 @@ import xyz.qweru.multirender.api.render.dim2.Context2d
 import xyz.qweru.multirender.api.render.texture.TextureHandler
 
 object API {
-    val event: EventBus = EventBus()
+    val events: EventBus = EventBus()
     lateinit var base: ApiBase
 
     lateinit var mouseHandler: Mouse

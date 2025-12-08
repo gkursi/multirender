@@ -4,6 +4,7 @@
   "package": "xyz.qweru.multirender.impl.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "MinecraftMixin"
   ],
   "client": [
     "DrawContextMixin",
@@ -11,6 +12,7 @@
     "GuiMixin",
     "KeyboardMixin",
     "MouseMixin",
+    "RenderSystemMixin",
     "WindowMixin",
     "mixininterface.DrawContextAccessor",
     "mixininterface.MouseInvoker"

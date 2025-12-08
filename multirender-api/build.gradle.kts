@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("com.github.gkursi:basalt:20dd54f16b")
+    api("com.github.gkursi:basalt:20dd54f16b")
 }
 
 tasks.test {

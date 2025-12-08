@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "test-1218",
+  "version": "${version}",
+
+  "name": "test-1218",
+  "description": "Multirender test mod for 1.21.8",
+  "authors": [],
+  "contact": {},
+
+  "license": "unlicense",
+  "icon": "assets/test-1218/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "xyz.qweru.test1218.TestMod"
+    ]
+  },
+
+  "mixins": [
+    "test-1218.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}

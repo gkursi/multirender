@@ -1,0 +1,49 @@
+package xyz.qweru.test1218
+
+import multirender.nanovg.constant.Blend
+import multirender.nanovg.constant.LineJoin
+import multirender.nanovg.event.NanoRenderEvent
+import multirender.nanovg.constant.Winding
+import multirender.nanovg.util.color.times
+import multirender.nanovg.util.math.Vec2f
+import net.fabricmc.api.ModInitializer
+import net.minecraft.world.phys.Vec2
+import xyz.qweru.geo.core.event.Handler
+import xyz.qweru.multirender.api.API
+import java.awt.Color
+
+class TestMod : ModInitializer {
+    val color = Color(167, 70, 188)
+
+    override fun onInitialize() {
+        API.events.subscribe(this)
+    }
+
+    @Handler
+    fun onRender2d(event: NanoRenderEvent) {
+        event.context.apply {
+            shape {
+                path {
+                    ellipse(Vec2f.absolute(100f, 100f), Vec2f.absolute(90f, 20f))
+                    roundedRectangle(Vec2f.relative(0.05f, 0.05f), Vec2f.relative(0.65f, 0.65f), 10f) {
+                        winding = Winding.HOLE
+                        scaleX = 2f
+                        scaleY = 0.1f
+                        angle = 0.3f
+                    }
+                }
+                
+                fill {
+                    paint = linearGradient(Vec2f.TOP_LEFT, Vec2f.BOTTOM_RIGHT, color, Color.pink)
+                }
+
+                stroke {
+                    paint = boxGradient(Vec2f.TOP_LEFT, Vec2f.BOTTOM_RIGHT, color * 0.75f, color, 10f, 20f)
+                    width = 7f
+                    join = LineJoin.ROUND
+                    miterLimit = 20f
+                }
+            }
+        }
+    }
+}

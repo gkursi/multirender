@@ -14,3 +14,4 @@ rootProject.name = "multirender"
 include("multirender-api")
 include("multirender-base-mc1218")
 include("multirender-extra-skija")
+include("test", "test:test-1218")
