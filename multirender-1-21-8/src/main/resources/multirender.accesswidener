@@ -1,0 +1,11 @@
+accessWidener v2 named
+
+## Render layer / pipeline accessors
+#accessible class net/minecraft/client/renderer/RenderType$CompositeState #accessible class net/minecraft/client/render/RenderLayer$MultiPhase
+#accessible class net/minecraft/client/renderer/RenderType$CompositeStateBuilder #accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters
+
+#accessible class net/minecraft/client/renderer/RenderStateShard$LayeringStateShard #accessible class net/minecraft/client/render/RenderPhase$Layering
+##accessible class net/minecraft/client/render/RenderPhase$Target
+
+##accessible field net/minecraft/client/render/RenderPhase VIEW_OFFSET_Z_LAYERING Lnet/minecraft/client/render/RenderPhase$Layering;
+##accessible field net/minecraft/client/render/RenderPhase ITEM_ENTITY_TARGET Lnet/minecraft/client/render/RenderPhase$Target;
