@@ -42,8 +42,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
     implementation(project(":multirender-api"))
-    modImplementation(project(":multirender-base-mc1218"))
-    implementation(project(":multirender-extra-skija"))
+    modImplementation(project(":multirender-1-21-8"))
+    implementation(project(":multirender-nanovg"))
 }
 
 tasks.processResources {
