@@ -1,10 +1,12 @@
 # MultiRender
-OpenGL renderer written in kotlin, compatible with Minecraft.
+Minecraft-focused rendering library
 
 ## Structure
 - `multirender-api` - the api
-- `multirender-base-..` - full api implementation for the specified version
-- `multirender-extra-..` - optional extra dependencies for more features
+- `multirender-<version>` - implementation of the api in the specified minecraft version
+  (e.g. `multirender-1-21-8`)
+- `multirender-nanovg` - nanovg with [Kotlin DSL](https://kotlinlang.org/docs/type-safe-builders.html) syntax
+  (not standalone, an api implementation is required)
 
 ## Usage
 - Include both `multirender-api` and the implementation you want to use in your project 
@@ -14,12 +16,10 @@ OpenGL renderer written in kotlin, compatible with Minecraft.
    - `mousehandler` / `keyboardHandler` - receive/spoof user input
    - `textureHandler` - create and manage textures (currently broken)
    - `context2d` - 2d rendering context
-- Refrain from using your own implementation of the api together with the provided implementations
 
 ## Roadmap
-- Add basic elements to 2d context (quads, rounded quads, circles, lines, ...)
-- Fix textures
-- Add 3d context
+- clean up api
+- 3d rendering
 
 ## Credit
-Base implementation made with https://learnopengl.com/
+- https://learnopengl.com/
