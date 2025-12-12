@@ -43,7 +43,7 @@ class ShapeScope(private val handle: Long) {
     fun stroke(block: StrokeStyleScope.() -> Unit) {
         assert(canSetStroke)
         block.invoke(stroke)
-        stroke.apply(NanoVG::nvgFillPaint)
+        stroke.apply(NanoVG::nvgStrokePaint)
         canSetStroke = false
         drawStroke()
     }

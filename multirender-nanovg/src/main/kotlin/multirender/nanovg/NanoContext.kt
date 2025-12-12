@@ -6,7 +6,10 @@ import org.lwjgl.nanovg.NanoVGGL3
 import java.lang.AutoCloseable
 
 /**
- * Holder of a NanoVG instance
+ * Holder of a NanoVG instance.
+ * Call `begin()` and `end()` before and after all draw calls each frame.
+ * Use `States` to preserve gl state.
+ * Call `shape` to draw.
  * @param ratio - framebuffer width over window width
  */
 class NanoContext(private var width: Float, private var height: Float, private var ratio: Float) : AutoCloseable {
