@@ -20,7 +20,7 @@ import java.awt.Color
 /**
  * Incomplete, currently only supports quads with radius 0
  */
-class MinecraftContext2d : Context2d() {
+class MinecraftContext2d : Context2d {
 
     private var building = false
     private lateinit var renderState: GuiRenderState
@@ -57,9 +57,11 @@ class MinecraftContext2d : Context2d() {
         if (!building) throw IllegalStateException("Call to $source() without calling begin()")
     }
 
-    override fun quad(x: Float, y: Float, w: Float, h: Float,
-                      color1: Color, color2: Color, color3: Color, color4: Color,
-                      rad1: Int, rad2: Int, rad3: Int, rad4: Int) {
+    override fun quad(
+        x: Float, y: Float, w: Float, h: Float,
+        color1: Color, color2: Color, color3: Color, color4: Color,
+        rad1: Int, rad2: Int, rad3: Int, rad4: Int
+    ) {
         check("quad")
         if (rad1 > 0f || rad2 > 0f || rad3 > 0f || rad4 > 0f)
             roundedQuadInternal(x, y, w, h, color1.rgb, color2.rgb, color3.rgb, color4.rgb, rad1, rad2, rad3, rad4)
@@ -67,8 +69,10 @@ class MinecraftContext2d : Context2d() {
             quadInternal(x, y, w, h, color1.rgb, color2.rgb, color3.rgb, color4.rgb)
     }
 
-    override fun line(x: Float, y: Float, x1: Float, y1: Float,
-                      color1: Color, color2: Color) {
+    override fun line(
+        x: Float, y: Float, x1: Float, y1: Float,
+        color1: Color, color2: Color
+    ) {
         check("line")
         val tex = getTextureSetup()
         renderState.submitGuiElement(LineState(
@@ -103,8 +107,10 @@ class MinecraftContext2d : Context2d() {
         RenderSystem.lineWidth(w)
     }
 
-    private fun quadInternal(x: Float, y: Float, w: Float, h: Float,
-                             color1: Int, color2: Int, color3: Int, color4: Int) {
+    private fun quadInternal(
+        x: Float, y: Float, w: Float, h: Float,
+        color1: Int, color2: Int, color3: Int, color4: Int
+    ) {
         val tex = getTextureSetup()
         renderState.submitGuiElement(QuadState(
             if (tex == TextureSetup.noTexture()) QuadPipeline.PLAIN else QuadPipeline.WITH_TEXTURE, tex,
@@ -113,9 +119,11 @@ class MinecraftContext2d : Context2d() {
         ))
     }
 
-    private fun roundedQuadInternal(x: Float, y: Float, w: Float, h: Float,
-                                    color1: Int, color2: Int, color3: Int, color4: Int,
-                                    rad1: Int, rad2: Int, rad3: Int, rad4: Int) {
+    private fun roundedQuadInternal(
+        x: Float, y: Float, w: Float, h: Float,
+        color1: Int, color2: Int, color3: Int, color4: Int,
+        rad1: Int, rad2: Int, rad3: Int, rad4: Int
+    ) {
 
     }
 

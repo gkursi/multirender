@@ -24,21 +24,16 @@ class TestMod : ModInitializer {
         event.context.apply {
             shape {
                 path {
-                    ellipse(Vec2f.absolute(100f, 100f), Vec2f.absolute(90f, 20f))
-                    roundedRectangle(Vec2f.relative(0.05f, 0.05f), Vec2f.relative(0.65f, 0.65f), 10f) {
-                        winding = Winding.HOLE
-                        scaleX = 2f
-                        scaleY = 0.1f
-                        angle = 0.3f
-                    }
+                    rectangle(Vec2f.absolute(20f, 20f), Vec2f.absolute(200f, 200f))
+                    ellipse(Vec2f.absolute(50f, 50f), Vec2f.absolute(10f, 10f))
                 }
                 
                 fill {
-                    paint = linearGradient(Vec2f.TOP_LEFT, Vec2f.BOTTOM_RIGHT, color, Color.pink)
+                    paint = linearGradient(Vec2f.TOP_LEFT, Vec2f.BOTTOM_RIGHT, Color.red, Color.green)
                 }
 
                 stroke {
-                    paint = boxGradient(Vec2f.TOP_LEFT, Vec2f.BOTTOM_RIGHT, color * 0.75f, color, 10f, 20f)
+                    paint = solid(Color.blue)
                     width = 7f
                     join = LineJoin.ROUND
                     miterLimit = 20f
