@@ -1,23 +1,31 @@
 package multirender.wm.config
 
-import multirender.wm.animation.Animation
-import multirender.wm.animation.Ease
+import multirender.wm.util.Alignment
+import multirender.wm.animation.curve.CubicBezier1d
+import multirender.wm.tiling.DoubleTiler
+import multirender.wm.tiling.MasterTiler
 
 object WMConfig {
+    // curves
+    val myCurve = CubicBezier1d(0.3f, 1f)
+
     // gaps
-    var windowGap = 10.0f
+    var windowGap = 5.0f
     var screenGap = 6.0f
 
     // animation
-    var openTime = 300
-    var openAnimation = Animation.SCALE
-    var openEase = Ease.EASE_OUT
+    var moveTime = 200
+    var moveCurve = myCurve
 
-    var closeTime = 300
-    var closeAnimation = Animation.FADE
-    var closeEase = Ease.EASE_OUT
+    var resizeTime = 150
+    var resizeCurve = myCurve
 
-    var resizeTime = 300
-    var resizeAnimation = Animation.FADE
-    var resizeEase = Ease.EASE_OUT
+    // bar
+    var barAlignment = Alignment.TOP
+    var barWidth = 20f
+
+    // tiling
+    var tiler = MasterTiler
+    var forceTile = false // force all floating windows to tile
+    var masterWidth = 0.6f // width of the master window
 }

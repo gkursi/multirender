@@ -1,11 +1,12 @@
 package multirender.nanovg.scope
 
+import multirender.nanovg.NanoContext
 import multirender.nanovg.constant.LineCap
 import multirender.nanovg.constant.LineJoin
 import org.lwjgl.nanovg.NVGPaint
 import org.lwjgl.nanovg.NanoVG
 
-class StrokeStyleScope(handle: Long) : StyleScope(handle) {
+class StrokeStyleScope(context: NanoContext) : StyleScope(context) {
     var width = 1f
     var cap = LineCap.BUTT
     var join = LineJoin.MITER

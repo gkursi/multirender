@@ -1,5 +1,6 @@
 package multirender.nanovg.scope
 
+import multirender.nanovg.NanoContext
 import multirender.nanovg.Scope
 import multirender.nanovg.util.color.set
 import multirender.nanovg.util.math.Vec2f
@@ -7,9 +8,11 @@ import org.lwjgl.nanovg.NVGColor
 import org.lwjgl.nanovg.NVGPaint
 import org.lwjgl.nanovg.NanoVG
 import java.awt.Color
+import kotlin.math.roundToInt
 
 @Scope
-open class StyleScope(val handle: Long) {
+open class StyleScope(private val context: NanoContext) {
+    val handle = context.handle
     private val blend = BlendScope(handle)
     private var canBlend = true
 
@@ -21,7 +24,7 @@ open class StyleScope(val handle: Long) {
         set(_) {}
 
     // This creates a single-color gradient instead of an actual NVGColor,
-    // because I was too lazy to abstract this further, while still keeping it clean.
+    // because I was too lazy to abstract this further while still keeping it clean.
     fun solid(color: Color) =
         linearGradient(Vec2f.TOP_LEFT, Vec2f.BOTTOM_RIGHT, color, color)
 
@@ -33,8 +36,8 @@ open class StyleScope(val handle: Long) {
             handle,
             from.x(), from.y(),
             to.x(), to.y(),
-            start.set(colorA),
-            end.set(colorB),
+            set(start, colorA),
+            set(end, colorB),
             target
         )
         return paint
@@ -51,8 +54,8 @@ open class StyleScope(val handle: Long) {
             handle,
             center.x(), center.y(),
             radius.x(), radius.y(),
-            start.set(colorA),
-            end.set(colorB),
+            set(start, colorA),
+            set(end, colorB),
             target
         )
         return paint
@@ -72,8 +75,8 @@ open class StyleScope(val handle: Long) {
             from.x(), from.y(),
             to.x() - from.x(), to.y() - from.y(),
             radius, feather,
-            inner.set(colorA),
-            outer.set(colorB),
+            set(inner, colorA),
+            set(inner, colorB),
             target
         )
         return paint
@@ -93,6 +96,16 @@ open class StyleScope(val handle: Long) {
     internal open fun apply(consumer: (Long, NVGPaint) -> Unit) {
         blend.apply()
         consumer.invoke(handle, target)
+    }
+
+    private fun set(c: Color, nvg: NVGColor): NVGColor {
+        val color = Color(
+            (c.red * context.colorTransform[0]).roundToInt(),
+            (c.green * context.colorTransform[1]).roundToInt(),
+            (c.blue * context.colorTransform[2]).roundToInt(),
+            (c.alpha * context.colorTransform[3]).roundToInt(),
+        )
+        return color.set(nvg)
     }
 
     // prevents requiring nanovg as a separate dependency

@@ -1,13 +1,17 @@
 package multirender.nanovg.scope
 
+import multirender.nanovg.NanoContext
 import multirender.nanovg.Scope
+import multirender.nanovg.util.color.times
 import org.lwjgl.nanovg.NanoVG
+import java.awt.Color
 
 @Scope
-class ShapeScope(private val handle: Long) {
-    private val path = PathScope(handle)
-    private val fill = StyleScope(handle)
-    private val stroke = StrokeStyleScope(handle)
+class ShapeScope(context: NanoContext) {
+    private val handle = context.handle
+    private val path = PathScope(context)
+    private val fill = StyleScope(context)
+    private val stroke = StrokeStyleScope(context)
 
     private var canSetPath = true
     private var canSetFill = true

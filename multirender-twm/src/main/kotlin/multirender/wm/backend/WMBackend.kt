@@ -7,13 +7,27 @@ interface WMBackend {
     /**
      * Shift the coordinate system origin
      */
-    fun moveOrigin(x: Float, y: Float)
+    fun moveOriginBy(x: Float, y: Float)
 
     /**
-     * Draw the border of a window
+     * Restore the coordinate system origin
      */
-    fun drawBorder(x: Float, y: Float, w: Float, h: Float, radius: Float)
+    fun restoreOrigin()
 
     fun getMouseX(): Float
     fun getMouseY(): Float
+
+    /**
+     * @return width accounting for origin not being at 0,0
+     */
+    fun getRemainingWidth(): Float
+    /**
+     * @return height accounting for origin not being at 0,0
+     */
+    fun getRemainingHeight(): Float
+
+    fun setScissor(x: Float, y: Float, w: Float, h: Float)
+    fun clearScissor()
+
+    fun globalAlpha(alpha: Float)
 }
