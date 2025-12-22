@@ -17,6 +17,14 @@ object WindowManager {
     private val fadeTimer = Timer(200)
     var open = false
         set(v) {
+            if (v != field) {
+                if (v) {
+                    backend.open()
+                } else {
+                    backend.close()
+                }
+            }
+
             field = v
             fadeTimer.reset()
         }

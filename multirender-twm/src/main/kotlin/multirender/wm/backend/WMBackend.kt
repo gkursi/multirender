@@ -30,4 +30,7 @@ interface WMBackend {
     fun clearScissor()
 
     fun globalAlpha(alpha: Float)
+
+    fun open()
+    fun close()
 }
