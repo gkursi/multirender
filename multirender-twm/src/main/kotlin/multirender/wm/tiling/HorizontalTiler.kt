@@ -19,6 +19,7 @@ object HorizontalTiler : Tiler {
             window.render(wm)
             offset += width
         }
+        wm.restoreOrigin()
     }
 
 }

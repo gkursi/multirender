@@ -1,5 +1,6 @@
 package multirender.wm.window
 
+import multirender.wm.WindowManager
 import multirender.wm.animation.Timer
 import multirender.wm.backend.WMBackend
 import multirender.wm.backend.WindowBackend
@@ -62,7 +63,17 @@ class Window(private val backend: WindowBackend) {
             width.center(), height.center(),
             width.value - gapRight * 2, height.value - gapDown * 2
         )
+
+        if (!isFocused()) {
+            target.mulGlobalAlpha(0.9f)
+        }
+
         backend.render()
+
+        if (!isFocused()) {
+            target.mulGlobalAlpha(1 / 0.9f)
+        }
+
         target.clearScissor()
         target.moveOriginBy(-x, -y)
     }
@@ -117,6 +128,9 @@ class Window(private val backend: WindowBackend) {
                 0f
             }
     }
+
+    private fun isFocused(): Boolean =
+        this == WindowManager.getFocused()
 
     private enum class Direction {
         FORWARDS, BACKWARDS

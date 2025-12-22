@@ -34,5 +34,6 @@ object MasterTiler : Tiler {
         }
 
         windows.forEach { it.render(wm) }
+        wm.restoreOrigin()
     }
 }

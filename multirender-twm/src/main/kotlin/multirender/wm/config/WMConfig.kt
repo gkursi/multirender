@@ -4,6 +4,7 @@ import multirender.wm.util.Alignment
 import multirender.wm.animation.curve.CubicBezier1d
 import multirender.wm.tiling.DoubleTiler
 import multirender.wm.tiling.MasterTiler
+import multirender.wm.tiling.Tiler
 
 object WMConfig {
     // curves
@@ -25,7 +26,7 @@ object WMConfig {
     var barWidth = 20f
 
     // tiling
-    var tiler = MasterTiler
+    var tiler: Tiler = MasterTiler
     var forceTile = false // force all floating windows to tile
     var masterWidth = 0.6f // width of the master window
 }

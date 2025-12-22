@@ -35,6 +35,7 @@ object DoubleTiler : Tiler {
         }
 
         windows.forEach { it.render(wm) }
+        wm.restoreOrigin()
     }
 
     /**
