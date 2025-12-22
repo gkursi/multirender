@@ -15,4 +15,8 @@ public interface MouseInvoker {
     void setDeltaX(double deltaX);
     @Accessor("accumulatedDY")
     void setDeltaY(double deltaY);
+    @Accessor("xpos")
+    double getXPos();
+    @Accessor("ypos")
+    double getYPos();
 }
