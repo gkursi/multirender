@@ -1,6 +1,10 @@
 # MultiRender
 Minecraft-focused rendering utilities
 
+> [!WARNING]
+> This project is still in early development.
+> Breaking changes may be introduced at any time without prior notice.
+
 ## Structure
 - `multirender-api` - the api
 - `multirender-<version>` - implementation of the api in the specified minecraft version
@@ -19,6 +23,7 @@ Minecraft-focused rendering utilities
 - [NanoVG usage](multirender-nanovg/README.md), [TWM usage](multirender-twm/README.md) 
 ## Roadmap
 - 3d rendering
+- Texture fixes
 
 ## Credit
 - https://learnopengl.com/
