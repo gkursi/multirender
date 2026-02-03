@@ -1,9 +1,9 @@
-package multirender.wm.backend
+package multirender.wm.manager
 
 /**
  * Window manager backend
  */
-interface WMBackend {
+interface Backend {
     /**
      * Shift the coordinate system origin
      */
@@ -13,9 +13,6 @@ interface WMBackend {
      * Restore the coordinate system origin
      */
     fun restoreOrigin()
-
-    fun getMouseX(): Float
-    fun getMouseY(): Float
 
     /**
      * @return width accounting for origin not being at 0,0
@@ -29,5 +26,9 @@ interface WMBackend {
     fun setScissor(x: Float, y: Float, w: Float, h: Float)
     fun clearScissor()
 
-    fun globalAlpha(alpha: Float)
+    fun setGlobalAlpha(alpha: Float)
+    fun mulGlobalAlpha(alpha: Float)
+
+    fun open()
+    fun close()
 }

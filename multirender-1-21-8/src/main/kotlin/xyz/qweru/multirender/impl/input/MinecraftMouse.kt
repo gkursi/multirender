@@ -10,6 +10,12 @@ import xyz.qweru.multirender.impl.util.Globals.client
 
 class MinecraftMouse : Mouse {
 
+    override val x: Float
+        get() = (client.mouseHandler as MouseInvoker).xPos.toFloat()
+
+    override val y: Float
+        get() = (client.mouseHandler as MouseInvoker).yPos.toFloat()
+
     fun press(button: Int) {
         (client.mouseHandler as MouseInvoker).invokeOnMouseButton(client.window.window, button, GLFW.GLFW_PRESS, 0)
     }

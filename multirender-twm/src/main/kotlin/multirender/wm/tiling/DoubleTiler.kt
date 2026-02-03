@@ -1,15 +1,16 @@
 package multirender.wm.tiling
 
-import multirender.wm.backend.WMBackend
+import multirender.wm.manager.Context
 import multirender.wm.window.Window
 
 object DoubleTiler : Tiler {
-    override fun render(
+    override fun tile(
         windows: List<Window>,
         width: Float,
         height: Float,
-        wm: WMBackend
+        context: Context
     ) {
+        val wm = context.backend
         val count = windows.size
         val even = count % 2 == 0
         val rows = if (count <= 2) 1 else 2
@@ -27,14 +28,12 @@ object DoubleTiler : Tiler {
 
             for (row in 1..rows) { // y
                 val window = windows[mapTile(row, col, count)]
-                window.set(offsetX, offsetY, width, height)
+                window.set(context, offsetX, offsetY, width, height)
                 offsetY += height
             }
 
             offsetX += width
         }
-
-        windows.forEach { it.render(wm) }
     }
 
     /**

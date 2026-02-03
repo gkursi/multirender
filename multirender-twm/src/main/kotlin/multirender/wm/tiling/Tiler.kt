@@ -1,8 +1,8 @@
 package multirender.wm.tiling
 
-import multirender.wm.backend.WMBackend
+import multirender.wm.manager.Context
 import multirender.wm.window.Window
 
 interface Tiler {
-    fun render(windows: List<Window>, width: Float, height: Float, wm: WMBackend)
+    fun tile(windows: List<Window>, width: Float, height: Float, context: Context)
 }

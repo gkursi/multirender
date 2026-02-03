@@ -1,11 +1,12 @@
 package multirender.wm.window
 
+import multirender.wm.manager.WindowManager
 import multirender.wm.animation.Timer
-import multirender.wm.backend.WMBackend
-import multirender.wm.backend.WindowBackend
-import multirender.wm.config.WMConfig
+import multirender.wm.config.Config
+import multirender.wm.manager.Context
 
-class Window(private val backend: WindowBackend) {
+class Window(private val backend: Renderer) {
+    private lateinit var config: Config
     private var opening = true
     private var closing = false
     internal var closed = false
@@ -19,7 +20,8 @@ class Window(private val backend: WindowBackend) {
     val sizeAnimation = Timer(400)
     val positionAnimation = Timer(400)
 
-    fun set(x: Float, y: Float, w: Float, h: Float) {
+    fun set(context: Context, x: Float, y: Float, w: Float, h: Float) {
+        config = context.config
         if (closing) return
         if (this.x.end == -1f) {
             // set to initial positions
@@ -32,7 +34,7 @@ class Window(private val backend: WindowBackend) {
             this.y.end = y
             this.x.reset()
             this.y.reset()
-            positionAnimation.length = WMConfig.moveTime
+            positionAnimation.length = config.moveTime
             positionAnimation.reset()
         }
 
@@ -41,12 +43,15 @@ class Window(private val backend: WindowBackend) {
             this.height.end = h
             this.width.reset()
             this.height.reset()
-            sizeAnimation.length = WMConfig.resizeTime
+            sizeAnimation.length = config.resizeTime
             sizeAnimation.reset()
         }
     }
 
-    fun render(target: WMBackend) {
+    fun render(ctx: Context) {
+        val target = ctx.backend
+        config = ctx.config
+
         interpolateProperties()
 
         val gapLeft = gapSize(Direction.BACKWARDS, x.end, width.end, target.getRemainingWidth())
@@ -62,13 +67,23 @@ class Window(private val backend: WindowBackend) {
             width.center(), height.center(),
             width.value - gapRight * 2, height.value - gapDown * 2
         )
+
+        if (!isFocused()) {
+            target.mulGlobalAlpha(0.9f)
+        }
+
         backend.render()
+
+        if (!isFocused()) {
+            target.mulGlobalAlpha(1 / 0.9f)
+        }
+
         target.clearScissor()
         target.moveOriginBy(-x, -y)
     }
 
-    fun close() {
-        set(x.end, y.end, 0f, 0f)
+    fun close(context: Context) {
+        set(context, x.end, y.end, 0f, 0f)
         closing = true
     }
 
@@ -78,8 +93,8 @@ class Window(private val backend: WindowBackend) {
                 && y <= this.y.value + height.value
 
     private fun interpolateProperties() {
-        val size = WMConfig.resizeCurve.get(sizeAnimation.progress)
-        val pos = WMConfig.moveCurve.get(positionAnimation.progress)
+        val size = config.resizeCurve.get(sizeAnimation.progress)
+        val pos = config.moveCurve.get(positionAnimation.progress)
 
         x.lerp(pos)
         y.lerp(pos)
@@ -95,8 +110,8 @@ class Window(private val backend: WindowBackend) {
     }
 
     private fun gapSize(direction: Direction, position: Float, size: Float, max: Float): Float = when (direction) {
-        Direction.BACKWARDS -> if (position <= 0f) WMConfig.screenGap else WMConfig.windowGap
-        Direction.FORWARDS -> if (position + size >= max) WMConfig.screenGap else WMConfig.windowGap
+        Direction.BACKWARDS -> if (position <= 0f) config.outerGap else config.innerGap
+        Direction.FORWARDS -> if (position + size >= max) config.innerGap else config.outerGap
     }
 
     private inner class Property(var start: Float = 0f, var end: Float = -1f, var value: Float = 0f) {
@@ -117,6 +132,9 @@ class Window(private val backend: WindowBackend) {
                 0f
             }
     }
+
+    private fun isFocused(): Boolean =
+        this == WindowManager.getFocused()
 
     private enum class Direction {
         FORWARDS, BACKWARDS

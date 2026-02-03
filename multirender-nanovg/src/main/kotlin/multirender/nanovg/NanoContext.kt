@@ -67,11 +67,18 @@ class NanoContext(private var width: Float, private var height: Float, private v
         NanoVG.nnvgResetScissor(handle)
     }
 
-    fun transformColor(r: Float = 1f, g: Float = 1f, b: Float = 1f, a: Float = 1f) {
+    fun setColor(r: Float = 1f, g: Float = 1f, b: Float = 1f, a: Float = 1f) {
         colorTransform[0] = r
         colorTransform[1] = g
         colorTransform[2] = b
         colorTransform[3] = a
+    }
+
+    fun mulColor(r: Float = 1f, g: Float = 1f, b: Float = 1f, a: Float = 1f) {
+        colorTransform[0] *= r
+        colorTransform[1] *= g
+        colorTransform[2] *= b
+        colorTransform[3] *= a
     }
 
     private fun assertOpen() {
