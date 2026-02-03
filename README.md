@@ -1,6 +1,10 @@
 # MultiRender
 Minecraft-focused rendering utilities
 
+> [!WARNING]
+> This project is still in early development.
+> Breaking changes may be introduced at any time without prior notice.
+
 ## Structure
 - `multirender-api` - the api
 - `multirender-<version>` - an implementation of the api
