@@ -1,4 +1,4 @@
-package multirender.nanovg.util.math
+package xyz.qweru.multirender.api.math
 
 import xyz.qweru.multirender.api.API
 import xyz.qweru.multirender.api.render.window.Window

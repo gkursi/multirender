@@ -3,7 +3,7 @@ package multirender.nanovg.scope
 import multirender.nanovg.NanoContext
 import multirender.nanovg.Scope
 import multirender.nanovg.util.color.set
-import multirender.nanovg.util.math.Vec2f
+import xyz.qweru.multirender.api.math.Vec2f
 import org.lwjgl.nanovg.NVGColor
 import org.lwjgl.nanovg.NVGPaint
 import org.lwjgl.nanovg.NanoVG

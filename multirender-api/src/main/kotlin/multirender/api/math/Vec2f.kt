@@ -1,4 +1,4 @@
-package multirender.nanovg.util.math
+package xyz.qweru.multirender.api.math
 
 interface Vec2f {
     companion object {

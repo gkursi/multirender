@@ -1,4 +1,4 @@
-package multirender.nanovg.util.math
+package xyz.qweru.multirender.api.math
 
 data class AbsoluteVec2f(val x: Float, val y: Float) : Vec2f {
     override fun x(): Float = x

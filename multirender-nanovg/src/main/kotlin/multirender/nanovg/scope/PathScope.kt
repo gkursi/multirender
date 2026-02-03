@@ -2,9 +2,8 @@ package multirender.nanovg.scope
 
 import multirender.nanovg.NanoContext
 import multirender.nanovg.Scope
-import multirender.nanovg.constant.Winding
-import multirender.nanovg.util.math.RelativeFloat
-import multirender.nanovg.util.math.Vec2f
+import xyz.qweru.multirender.api.math.RelativeFloat
+import xyz.qweru.multirender.api.math.Vec2f
 import org.lwjgl.nanovg.NanoVG
 
 @Scope
