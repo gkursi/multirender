@@ -23,6 +23,6 @@ interface Vec2f {
             RelativeVec2f(x, y)
     }
 
-    fun x(): Float
-    fun y(): Float
+    val x: Float
+    val y: Float
 }

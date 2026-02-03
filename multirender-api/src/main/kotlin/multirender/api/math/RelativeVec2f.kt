@@ -6,7 +6,7 @@ import xyz.qweru.multirender.api.render.window.Window
 /**
  * Vec2f implementation with relative values
  */
-data class RelativeVec2f(val xValue: RelativeFloat, val yValue: RelativeFloat) : Vec2f {
+class RelativeVec2f(xValue: RelativeFloat, valueX: RelativeFloat) : Vec2f {
     companion object {
         private val window: Window
             get() = API.base.getWindow()
@@ -21,9 +21,6 @@ data class RelativeVec2f(val xValue: RelativeFloat, val yValue: RelativeFloat) :
         RelativeFloat(y) { window.getHeight() }
     )
 
-    private val screenX by xValue
-    private val screenY by yValue
-
-    override fun x(): Float = screenX
-    override fun y(): Float = screenY
+    override val x by xValue
+    override val y by valueX
 }
