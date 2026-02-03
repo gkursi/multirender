@@ -1,4 +1,4 @@
-package xyz.qweru.multirender.api.math
+package xyz.qweru.multirender.api.util.math
 
 interface Vec2f {
     companion object {

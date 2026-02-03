@@ -15,7 +15,7 @@ import xyz.qweru.multirender.impl.render.dim2.state.LineState
 import xyz.qweru.multirender.impl.render.dim2.state.QuadState
 import xyz.qweru.multirender.impl.render.texture.MinecraftTexture
 import xyz.qweru.multirender.impl.util.screenRect
-import java.awt.Color
+import xyz.qweru.multirender.api.util.color.Color
 
 /**
  * Incomplete, currently only supports quads with radius 0
@@ -64,9 +64,9 @@ class MinecraftContext2d : Context2d {
     ) {
         check("quad")
         if (rad1 > 0f || rad2 > 0f || rad3 > 0f || rad4 > 0f)
-            roundedQuadInternal(x, y, w, h, color1.rgb, color2.rgb, color3.rgb, color4.rgb, rad1, rad2, rad3, rad4)
+            roundedQuadInternal(x, y, w, h, color1.rgba, color2.rgba, color3.rgba, color4.rgba, rad1, rad2, rad3, rad4)
         else
-            quadInternal(x, y, w, h, color1.rgb, color2.rgb, color3.rgb, color4.rgb)
+            quadInternal(x, y, w, h, color1.rgba, color2.rgba, color3.rgba, color4.rgba)
     }
 
     override fun line(
@@ -79,7 +79,7 @@ class MinecraftContext2d : Context2d {
 //            if (tex == TextureSetup.empty()) LinePipeline.PLAIN else LinePipeline.WITH_TEXTURE,
             LinePipeline.LINES_NODEPTH_PIPELINE,
             tex, Matrix3x2f(matrices), x, y, x1, y1,
-            color1 = color1.rgb, color2 = color2.rgb))
+            color1 = color1.rgba, color2 = color2.rgba))
     }
 
     override fun setScissor(x: Float, y: Float, w: Float, h: Float) {

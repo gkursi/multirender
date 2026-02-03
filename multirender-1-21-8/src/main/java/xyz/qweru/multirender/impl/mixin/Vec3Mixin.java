@@ -4,7 +4,7 @@ import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import xyz.qweru.multirender.api.math.Vec3d;
+import xyz.qweru.multirender.api.util.math.Vec3d;
 
 @Mixin(Vec3.class)
 public class Vec3Mixin implements Vec3d {

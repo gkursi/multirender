@@ -1,4 +1,4 @@
-package xyz.qweru.multirender.api.math
+package xyz.qweru.multirender.api.util.math
 
 interface Vec3d {
     companion object {

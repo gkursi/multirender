@@ -1,4 +1,4 @@
-package xyz.qweru.multirender.api.math
+package xyz.qweru.multirender.api.util.math
 
 import xyz.qweru.multirender.api.API
 import xyz.qweru.multirender.api.render.window.Window

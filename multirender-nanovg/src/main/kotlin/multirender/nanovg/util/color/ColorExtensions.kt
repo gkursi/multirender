@@ -2,7 +2,7 @@ package multirender.nanovg.util.color
 
 import org.lwjgl.nanovg.NVGColor
 import org.lwjgl.nanovg.NanoVG
-import java.awt.Color
+import xyz.qweru.multirender.api.util.color.Color
 
 fun Color.set(o: NVGColor) = NanoVG.nvgRGBA(
     red.toByte(),
