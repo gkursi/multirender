@@ -1,9 +1,9 @@
-package multirender.wm.backend
+package multirender.wm.manager
 
 /**
  * Window manager backend
  */
-interface WMBackend {
+interface Backend {
     /**
      * Shift the coordinate system origin
      */

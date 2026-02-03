@@ -1,11 +1,11 @@
-package multirender.wm
+package multirender.wm.manager
 
 import multirender.wm.animation.Timer
-import multirender.wm.backend.BarBackend
-import multirender.wm.backend.WMBackend
-import multirender.wm.backend.WindowBackend
-import multirender.wm.config.WMConfig
-import multirender.wm.util.lastOrNull
+import multirender.wm.bar.Bar
+import multirender.wm.config.Config
+import multirender.wm.window.Renderer
+import multirender.wm.config.DefaultConfig
+import multirender.wm.notification.NotificationManager
 import multirender.wm.util.reverseFirstOrNull
 import multirender.wm.window.Window
 import xyz.qweru.multirender.api.API
@@ -15,8 +15,8 @@ object WindowManager {
     private val windows = CopyOnWriteArrayList<Window>()
     private val floatingWindows = CopyOnWriteArrayList<Window>()
 
-    private lateinit var backend: WMBackend
-    private var bar: BarBackend? = null
+    private lateinit var backend: Backend
+    private var bar: Bar? = null
 
     private var focused: Window? = null
 
@@ -28,6 +28,8 @@ object WindowManager {
             } else {
                 1 - fadeTimer.progress
             }
+
+    var config: Config = DefaultConfig
     var open = false
         set(v) {
             if (v != field) {
@@ -42,15 +44,23 @@ object WindowManager {
             fadeTimer.reset()
         }
 
-    fun setBackend(backend: WMBackend) {
+    fun setBackend(backend: Backend) {
         this.backend = backend
     }
 
-    fun setBar(bar: BarBackend) {
+    fun setBar(bar: Bar) {
         this.bar = bar
     }
 
     fun render() {
+        val mx = API.mouseHandler.x
+        val my = API.mouseHandler.y
+        val context = Context(
+            backend, config,
+            mouseX = mx,
+            mouseY = my
+        )
+
         backend.setGlobalAlpha(opacity)
 
         // update windows
@@ -58,40 +68,45 @@ object WindowManager {
         floatingWindows.removeIf { it.closed }
 
         // update focused window
-        val mx = API.mouseHandler.x
-        val my = API.mouseHandler.y
-
         focused = floatingWindows.reverseFirstOrNull { it.contains(mx, my) }
                     ?: windows.firstOrNull { it.contains(mx, my) }
 
+        // update notifications
+        NotificationManager.collect()
+
         // draw bar
-        bar?.render(WMConfig.barAlignment, WMConfig.barWidth)
+        bar?.render(context)
 
         // draw windows
-        WMConfig.tiler.render(
-            windows = windows, wm = backend,
+        config.tiler.tile(
+            windows = windows, context = context,
             width = backend.getRemainingWidth(),
             height = backend.getRemainingHeight()
         )
 
-        floatingWindows.forEach { it.render(backend) }
+        windows.render(context)
+        floatingWindows.render(context)
+
+        // draw notifications
+        NotificationManager.render(context)
+        backend.restoreOrigin()
     }
 
-    fun addWindow(backend: WindowBackend) {
+    fun addWindow(backend: Renderer) {
         windows.add(Window(backend))
     }
 
-    fun addFloatingWindow(backend: WindowBackend, x: Float, y: Float, w: Float, h: Float) {
-        if (WMConfig.forceTile) {
+    fun addFloatingWindow(backend: Renderer, x: Float, y: Float, w: Float, h: Float) {
+        if (DefaultConfig.forceTile) {
             addWindow(backend)
         } else {
             floatingWindows.add(Window(backend).apply {
-                set(x, y, w, h)
+                set(Context(this@WindowManager.backend, config), x, y, w, h)
             })
         }
     }
 
-    fun getFocused(): Window? = focused ?: windows.lastOrNull()
+    fun getFocused(): Window? = focused
 
     fun closeFocused() {
         if (windows.isEmpty() && floatingWindows.isEmpty()) return
@@ -99,6 +114,8 @@ object WindowManager {
         windows.remove(window)
         floatingWindows.remove(window)
         floatingWindows.addFirst(window)
-        window.close()
+        window.close(Context(backend, config))
     }
+
+    fun Collection<Window>.render(context: Context) = forEach { it.render(context) }
 }
