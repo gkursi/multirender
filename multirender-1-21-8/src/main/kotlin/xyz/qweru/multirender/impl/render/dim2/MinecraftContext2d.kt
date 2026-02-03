@@ -14,7 +14,7 @@ import xyz.qweru.multirender.impl.render.dim2.pipeline.QuadPipeline
 import xyz.qweru.multirender.impl.render.dim2.state.LineState
 import xyz.qweru.multirender.impl.render.dim2.state.QuadState
 import xyz.qweru.multirender.impl.render.texture.MinecraftTexture
-import xyz.qweru.multirender.impl.util.MathUtils
+import xyz.qweru.multirender.impl.util.screenRect
 import java.awt.Color
 
 /**
@@ -84,7 +84,7 @@ class MinecraftContext2d : Context2d {
 
     override fun setScissor(x: Float, y: Float, w: Float, h: Float) {
         check("setScissor")
-        this.scissor = MathUtils.screenRect(x, y, x + w, y + h)
+        this.scissor = screenRect(x, y, x + w, y + h)
     }
 
     override fun clearScissor() {
