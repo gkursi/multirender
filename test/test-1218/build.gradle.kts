@@ -41,9 +41,9 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
-//    implementation(project(":multirender-api"))
-//    modImplementation(project(":multirender-1-21-8"))
-//    implementation(project(":multirender-nanovg"))
+    implementation(project(":multirender-api"))
+    modImplementation(project(":multirender-1-21-8"))
+    implementation(project(":multirender-nanovg"))
 }
 
 tasks.processResources {

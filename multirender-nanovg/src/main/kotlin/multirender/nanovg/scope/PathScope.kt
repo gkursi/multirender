@@ -2,9 +2,8 @@ package multirender.nanovg.scope
 
 import multirender.nanovg.NanoContext
 import multirender.nanovg.Scope
-import multirender.nanovg.constant.Winding
-import multirender.nanovg.util.math.RelativeFloat
-import multirender.nanovg.util.math.Vec2f
+import xyz.qweru.multirender.api.util.math.RelativeFloat
+import xyz.qweru.multirender.api.util.math.Vec2f
 import org.lwjgl.nanovg.NanoVG
 
 @Scope
@@ -20,7 +19,7 @@ class PathScope(val context: NanoContext) {
         from: Vec2f, to: Vec2f,
         block: PathConfigScope.() -> Unit = {}
     ) = withConfig(block) {
-        NanoVG.nvgRect(handle, from.x(), from.y(), to.x() - from.x(), to.y() - from.y())
+        NanoVG.nvgRect(handle, from.x, from.y, to.x - from.x, to.y - from.y)
         block.invoke(subConfig)
     }
 
@@ -29,8 +28,8 @@ class PathScope(val context: NanoContext) {
         block: PathConfigScope.() -> Unit = {}
     ) = withConfig(block) {
         NanoVG.nvgRoundedRect(handle,
-            from.x(), from.y(),
-            to.x() - from.x(), to.y() - from.y(),
+            from.x, from.y,
+            to.x - from.x, to.y - from.y,
             radius
         )
     }
@@ -42,7 +41,7 @@ class PathScope(val context: NanoContext) {
         block: PathConfigScope.() -> Unit = {}
     ) = withConfig(block) {
         NanoVG.nvgRoundedRectVarying(
-            handle, from.x(), from.y(), to.x() - from.x(), to.y() - from.y(),
+            handle, from.x, from.y, to.x - from.x, to.y - from.y,
             radiusTL, radiusTR, radiusBL, radiusBR
         )
     }
@@ -51,7 +50,7 @@ class PathScope(val context: NanoContext) {
         center: Vec2f, radius: Vec2f,
         block: PathConfigScope.() -> Unit = {}
     ) = withConfig(block) {
-        NanoVG.nvgEllipse(handle, center.x(), center.y(), radius.x(), radius.y())
+        NanoVG.nvgEllipse(handle, center.x, center.y, radius.x, radius.y)
     }
 
     inline fun circle(
@@ -65,7 +64,7 @@ class PathScope(val context: NanoContext) {
         center: Vec2f, radius: Float,
         block: PathConfigScope.() -> Unit = {}
     ) = withConfig(block) {
-        NanoVG.nvgCircle(handle,center.x(), center.y(), radius)
+        NanoVG.nvgCircle(handle,center.x, center.y, radius)
     }
 
     /**

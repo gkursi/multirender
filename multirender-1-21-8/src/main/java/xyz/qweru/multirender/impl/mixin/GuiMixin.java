@@ -8,8 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.qweru.multirender.api.API;
-
-import java.awt.*;
+import xyz.qweru.multirender.api.util.color.Color;
 
 @Mixin(Gui.class)
 public class GuiMixin {

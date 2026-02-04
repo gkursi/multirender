@@ -4,7 +4,7 @@ import multirender.nanovg.NanoContext
 import multirender.nanovg.Scope
 import multirender.nanovg.util.color.times
 import org.lwjgl.nanovg.NanoVG
-import java.awt.Color
+import xyz.qweru.multirender.api.util.color.Color
 
 @Scope
 class ShapeScope(context: NanoContext) {

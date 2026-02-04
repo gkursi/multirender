@@ -10,7 +10,7 @@ import net.fabricmc.api.ModInitializer
 import net.minecraft.world.phys.Vec2
 import xyz.qweru.geo.core.event.Handler
 import xyz.qweru.multirender.api.API
-import java.awt.Color
+import xyz.qweru.multirender.api.util.color.Color
 
 class TestMod : ModInitializer {
     val color = Color(167, 70, 188)

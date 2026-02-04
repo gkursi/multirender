@@ -15,9 +15,6 @@ dependencies {
     implementation(project(":multirender-api"))
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
 kotlin {
     jvmToolchain(21)
 }

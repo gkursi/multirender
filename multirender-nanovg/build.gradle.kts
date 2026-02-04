@@ -49,10 +49,6 @@ dependencies {
     implementation("org.lwjgl", "lwjgl-nanovg", classifier = lwjglNatives)
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 kotlin {
     jvmToolchain(21)
 }

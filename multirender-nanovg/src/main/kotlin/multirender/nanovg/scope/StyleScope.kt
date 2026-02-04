@@ -3,11 +3,11 @@ package multirender.nanovg.scope
 import multirender.nanovg.NanoContext
 import multirender.nanovg.Scope
 import multirender.nanovg.util.color.set
-import multirender.nanovg.util.math.Vec2f
+import xyz.qweru.multirender.api.util.math.Vec2f
 import org.lwjgl.nanovg.NVGColor
 import org.lwjgl.nanovg.NVGPaint
 import org.lwjgl.nanovg.NanoVG
-import java.awt.Color
+import xyz.qweru.multirender.api.util.color.Color
 import kotlin.math.roundToInt
 
 @Scope
@@ -34,8 +34,8 @@ open class StyleScope(private val context: NanoContext) {
     ): PaintHolder {
         NanoVG.nvgLinearGradient(
             handle,
-            from.x(), from.y(),
-            to.x(), to.y(),
+            from.x, from.y,
+            to.x, to.y,
             set(start, colorA),
             set(end, colorB),
             target
@@ -52,8 +52,8 @@ open class StyleScope(private val context: NanoContext) {
     ): PaintHolder {
         NanoVG.nvgRadialGradient(
             handle,
-            center.x(), center.y(),
-            radius.x(), radius.y(),
+            center.x, center.y,
+            radius.x, radius.y,
             set(start, colorA),
             set(end, colorB),
             target
@@ -72,8 +72,8 @@ open class StyleScope(private val context: NanoContext) {
     ): PaintHolder {
         NanoVG.nvgBoxGradient(
             handle,
-            from.x(), from.y(),
-            to.x() - from.x(), to.y() - from.y(),
+            from.x, from.y,
+            to.x - from.x, to.y - from.y,
             radius, feather,
             set(inner, colorA),
             set(inner, colorB),

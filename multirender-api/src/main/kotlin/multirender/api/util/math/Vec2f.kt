@@ -1,4 +1,4 @@
-package multirender.nanovg.util.math
+package xyz.qweru.multirender.api.util.math
 
 interface Vec2f {
     companion object {
@@ -23,6 +23,6 @@ interface Vec2f {
             RelativeVec2f(x, y)
     }
 
-    fun x(): Float
-    fun y(): Float
+    val x: Float
+    val y: Float
 }
