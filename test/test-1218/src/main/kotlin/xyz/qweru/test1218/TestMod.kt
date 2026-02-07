@@ -1,16 +1,12 @@
 package xyz.qweru.test1218
 
-import multirender.nanovg.constant.Blend
-import multirender.nanovg.constant.LineJoin
-import multirender.nanovg.event.NanoRenderEvent
-import multirender.nanovg.constant.Winding
-import multirender.nanovg.util.color.times
-import multirender.nanovg.util.math.Vec2f
+import xyz.qweru.multirender.nvg.constant.LineJoin
+import xyz.qweru.multirender.nvg.NanoRenderEvent
 import net.fabricmc.api.ModInitializer
-import net.minecraft.world.phys.Vec2
 import xyz.qweru.geo.core.event.Handler
 import xyz.qweru.multirender.api.API
 import xyz.qweru.multirender.api.util.color.Color
+import xyz.qweru.multirender.api.util.math.Vec2f
 
 class TestMod : ModInitializer {
     val color = Color(167, 70, 188)

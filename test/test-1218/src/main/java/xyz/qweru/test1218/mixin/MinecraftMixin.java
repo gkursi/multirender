@@ -1,7 +1,7 @@
 package xyz.qweru.test1218.mixin;
 
 import com.mojang.blaze3d.platform.Window;
-import multirender.nanovg.NanoState;
+import xyz.qweru.multirender.nvg.NanoState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.main.GameConfig;
 import org.spongepowered.asm.mixin.Mixin;

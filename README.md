@@ -8,8 +8,9 @@ Minecraft-focused rendering utilities
 ## Structure
 - `multirender-api` - the api
 - `multirender-<version>` - an implementation of the api
-- `multirender-nanovg` - "kotlinified" nanovg
 - `multirender-twm` - a tiling window manager
+- `multirender-widget`
+- `multirender-nanovg` - "kotlinified" nanovg
 
 ## Usage
 - Include both `multirender-api` and the implementation you want to use in your project 

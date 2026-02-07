@@ -1,10 +1,6 @@
 plugins {
-    kotlin("jvm")
-    id("maven-publish")
+    kotlin("jvm") version "2.2.20"
 }
-
-val lwjglVersion = "3.3.6"
-val jomlVersion = "1.10.8"
 
 val lwjglNatives = Pair(
     System.getProperty("os.name")!!,
@@ -20,9 +16,9 @@ val lwjglNatives = Pair(
                 "natives-linux-riscv64"
             else
                 "natives-linux"
-        arrayOf("Windows").any { name.startsWith(it) }                ->
+        arrayOf("Windows").any { name.startsWith(it) } ->
             "natives-windows"
-        else                                                                            ->
+        else ->
             throw Error("Unrecognized or unsupported platform. Please set \"lwjglNatives\" manually")
     }
 }
@@ -36,24 +32,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
     implementation(project(":multirender-api"))
-    implementation(project(":multirender-gl-compat"))
-
-    // nanovg
     implementation(platform("org.lwjgl:lwjgl-bom:3.3.6"))
-    implementation("org.lwjgl", "lwjgl-nanovg")
-    implementation("org.lwjgl", "lwjgl-nanovg", classifier = lwjglNatives)
+    compileOnly("org.lwjgl", "lwjgl-opengl")
+    compileOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
 }
 
 kotlin {
     jvmToolchain(21)
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
-    }
 }

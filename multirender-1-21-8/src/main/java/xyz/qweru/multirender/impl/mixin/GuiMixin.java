@@ -16,8 +16,7 @@ public class GuiMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
 //        API.context2d.quad(10, 10, 100, 100, Color.RED, Color.GREEN, Color.BLUE, Color.WHITE, 0);
-        API.context2d.lineWidth(1f);
-        API.context2d.line(10, 10, 110, 110, Color.RED, Color.GREEN);
+
     }
 
 }
