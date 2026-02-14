@@ -10,3 +10,4 @@ abstract class WindowSize {
 
 object WindowSizeChangeEvent : WindowSize()
 object WindowCreateEvent : WindowSize()
+object WindowCloseEvent

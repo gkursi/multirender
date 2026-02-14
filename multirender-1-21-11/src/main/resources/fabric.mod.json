@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "multirender",
+  "version": "${version}",
+
+  "name": "multirender",
+  "description": "",
+  "authors": [],
+  "contact": {},
+
+  "license": "All-Rights-Reserved",
+
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "xyz.qweru.multirender.impl.Multirender"
+    ]
+  },
+
+  "mixins": [
+    "multirender.mixins.json"
+  ],
+  "accessWidener": "multirender.accesswidener",
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}

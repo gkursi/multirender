@@ -23,6 +23,10 @@ java {
     withSourcesJar()
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/multirender.accesswidener")
+}
+
 fabricApi {
     configureDataGeneration {
         client = true
@@ -30,6 +34,11 @@ fabricApi {
 }
 
 repositories {
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
     maven("https://jitpack.io")
 }
 
@@ -40,9 +49,13 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
-    implementation(project(":multirender-api"))
-//    modImplementation(project(":multirender-1-21-8"))
-    implementation(project(":multirender-nanovg"))
+    implementation(project(":multirender-api"))?.let { include(it) }
+
+    setOf(
+        "fabric-transitive-access-wideners-v1"
+    ).forEach {
+        modImplementation(fabricApi.module(it, project.property("fabric_version") as String))
+    }
 }
 
 tasks.processResources {
@@ -52,12 +65,10 @@ tasks.processResources {
     filteringCharset = "UTF-8"
 
     filesMatching("fabric.mod.json") {
-        expand(
-            "version" to project.version,
+        expand("version" to project.version,
             "minecraft_version" to project.property("minecraft_version")!!,
             "loader_version" to project.property("loader_version")!!,
-            "kotlin_loader_version" to project.property("kotlin_loader_version")!!
-        )
+            "kotlin_loader_version" to project.property("kotlin_loader_version")!!)
     }
 }
 
@@ -78,6 +89,7 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_${project.base.archivesName}" }
     }
+    outputs.upToDateWhen { false }
 }
 
 // configure the maven publication
