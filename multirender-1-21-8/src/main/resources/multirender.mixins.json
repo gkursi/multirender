@@ -4,7 +4,8 @@
   "package": "xyz.qweru.multirender.impl.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "Vec3Mixin"
   ],
   "client": [
     "DrawContextMixin",

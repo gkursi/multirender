@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.qweru.multirender.impl.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MinecraftMixin",
+    "Vec3Mixin"
+  ],
+  "client": [
+    "KeyboardMixin",
+    "MouseMixin",
+    "RenderSystemMixin",
+    "WindowMixin",
+    "mixininterface.MouseInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

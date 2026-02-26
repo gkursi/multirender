@@ -23,7 +23,6 @@ java {
     withSourcesJar()
 }
 
-
 fabricApi {
     configureDataGeneration {
         client = true
@@ -41,9 +40,9 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
-//    implementation(project(":multirender-api"))
+    implementation(project(":multirender-api"))
 //    modImplementation(project(":multirender-1-21-8"))
-//    implementation(project(":multirender-nanovg"))
+    implementation(project(":multirender-nanovg"))
 }
 
 tasks.processResources {
@@ -53,10 +52,12 @@ tasks.processResources {
     filteringCharset = "UTF-8"
 
     filesMatching("fabric.mod.json") {
-        expand("version" to project.version,
-            "minecraft_version" to project.property("minecraft_version"),
-            "loader_version" to project.property("loader_version"),
-            "kotlin_loader_version" to project.property("kotlin_loader_version"))
+        expand(
+            "version" to project.version,
+            "minecraft_version" to project.property("minecraft_version")!!,
+            "loader_version" to project.property("loader_version")!!,
+            "kotlin_loader_version" to project.property("kotlin_loader_version")!!
+        )
     }
 }
 

@@ -1,7 +1,7 @@
 package xyz.qweru.multirender.api.render.dim2
 
 import xyz.qweru.multirender.api.render.texture.Texture
-import java.awt.Color
+import xyz.qweru.multirender.api.util.color.Color
 
 interface Context2d {
     fun begin()

@@ -38,19 +38,12 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation(project(":multirender-api"))
-
-    // lwjgl for opengl (required for state save/restore)
-    implementation(platform("org.lwjgl:lwjgl-bom:3.3.6"))
-    compileOnly("org.lwjgl", "lwjgl-opengl")
-    compileOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
+    implementation(project(":multirender-gl-compat"))
 
     // nanovg
+    implementation(platform("org.lwjgl:lwjgl-bom:3.3.6"))
     implementation("org.lwjgl", "lwjgl-nanovg")
     implementation("org.lwjgl", "lwjgl-nanovg", classifier = lwjglNatives)
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 kotlin {

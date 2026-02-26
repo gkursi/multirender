@@ -12,13 +12,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
     api("com.github.gkursi:basalt:20dd54f16b")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
 kotlin {
     jvmToolchain(21)
 }

@@ -21,11 +21,11 @@ object DefaultConfig : Config {
     override var resizeCurve = myCurve
 
     // bar
-    override var barAlign = Alignment.LEFT
-    override var barWidth = 30f
+    override var barAlign = Alignment.TOP
+    override var barWidth = 20f
 
     // tiling
     override var tiler: Tiler = MasterTiler
     override var forceTile = false // force all floating windows to tile
-    override var masterWidth = 0.6f // width of the master window
+    override var masterWidth = 0.7f // width of the master window
 }

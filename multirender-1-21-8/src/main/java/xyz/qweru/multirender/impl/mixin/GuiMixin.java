@@ -8,8 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.qweru.multirender.api.API;
-
-import java.awt.*;
+import xyz.qweru.multirender.api.util.color.Color;
 
 @Mixin(Gui.class)
 public class GuiMixin {
@@ -17,8 +16,7 @@ public class GuiMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
 //        API.context2d.quad(10, 10, 100, 100, Color.RED, Color.GREEN, Color.BLUE, Color.WHITE, 0);
-        API.context2d.lineWidth(1f);
-        API.context2d.line(10, 10, 110, 110, Color.RED, Color.GREEN);
+
     }
 
 }
